@@ -58,6 +58,20 @@ toolCard:
 search:
   label: Search
 tools:
+  ai-playground:
+    title: AI Chatbox Playground
+    description: Experiment with LLMs and test prompts with streaming responses
+    input: Type a message and press Send…
+    actions:
+      send: Send
+      stop: Stop
+      clear: Clear chat
+    settings:
+      baseUrl: Provider base URL
+      apiKey: API key
+      model: Model
+      temperature: Temperature
+      system: System prompt
   categories:
     favorite-tools: 'Your favorite tools'
     crypto: Crypto

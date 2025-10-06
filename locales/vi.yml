@@ -58,6 +58,20 @@ toolCard:
 search:
   label: Tìm kiếm
 tools:
+  ai-playground:
+    title: Sân chơi AI Chatbox
+    description: Thử nghiệm với các mô hình LLM và kiểm thử prompt với phản hồi dạng streaming
+    input: Nhập tin nhắn và nhấn Gửi…
+    actions:
+      send: Gửi
+      stop: Dừng
+      clear: Xóa đoạn chat
+    settings:
+      baseUrl: URL nhà cung cấp
+      apiKey: API key
+      model: Mô hình
+      temperature: Nhiệt độ (temperature)
+      system: System prompt
   categories:
     favorite-tools: 'Công cụ yêu thích của bạn'
     crypto: Mã hóa
