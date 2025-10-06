@@ -225,6 +225,83 @@ tools:
     title: Escape HTML entities
     description: Escape or unescape HTML entities (replace characters like <,>, &, " and \' with their HTML version)
 
+  html-to-markdown:
+    title: HTML to Markdown
+    description: Convert HTML content to Markdown format with customizable options and validation
+    batch:
+      title: Batch Processing
+      description: Process multiple HTML files simultaneously
+      upload:
+        dragDrop: Drag and drop multiple HTML files here
+        clickToUpload: or click to select files
+        invalidFileType: Please upload HTML files (.html or .htm)
+        fileReadError: 'Failed to read file: {error}'
+      processing:
+        start: Start Processing
+        retry: Retry Failed
+        pause: Pause
+        clear: Clear All
+        status:
+          pending: Pending
+          processing: Processing
+          completed: Completed
+          error: Error
+      export:
+        allAsZip: Export All as ZIP
+        selectedAsZip: Export Selected as ZIP
+        individual: Download Individual Files
+        selectFiles: Select files to export
+      options:
+        maxConcurrent: Max Concurrent Files
+        autoRetry: Auto-retry Failed Files
+        stopOnError: Stop on First Error
+        namingConvention: File Naming Convention
+        namingConventions:
+          original: Original filename
+          timestamp: With timestamp
+          indexed: With index
+      preview:
+        title: File Preview
+        original: Original HTML
+        markdown: Converted Markdown
+      stats:
+        total: Total
+        completed: Completed
+        failed: Failed
+        pending: Pending
+
+  xml-to-json:
+    title: XML to JSON
+    description: Convert XML content to JSON format
+
+  json-to-xml:
+    title: JSON to XML
+    description: Convert JSON content to XML format
+
+  markdown-to-html:
+    title: Markdown to HTML
+    description: Convert Markdown content to HTML
+
+  safelink-decoder:
+    title: Safelink decoder
+    description: Decode URLs protected by safelink wrappers
+
+  email-normalizer:
+    title: Email normalizer
+    description: Normalize emails by removing dots, tags and common variants
+
+  regex-tester:
+    title: Regex tester
+    description: Test, debug and visualize regular expressions
+
+  regex-memo:
+    title: Regex memo
+    description: Save and organize your favorite regular expressions
+
+  ascii-text-drawer:
+    title: ASCII text drawer
+    description: Generate ASCII art banners from text
+
   json-prettify:
     title: JSON prettify and format
     description: Prettify your JSON string into a friendly, human-readable format.

@@ -70,3 +70,7 @@ tools:
     measurement: 'Medidas'
     text: 'Texto'
     data: 'Dados'
+
+  html-to-markdown:
+    title: HTML para Markdown
+    description: Converter conteúdo HTML para formato Markdown com opções personalizáveis e validação

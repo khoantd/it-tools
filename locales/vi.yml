@@ -381,3 +381,11 @@ tools:
   text-to-binary:
     title: Chuyển đổi văn bản thành nhị phân ASCII
     description: Chuyển đổi văn bản thành biểu diễn nhị phân ASCII của nó và ngược lại.
+
+  html-to-markdown:
+    title: HTML sang Markdown
+    description: Chuyển đổi nội dung HTML sang định dạng Markdown với các tùy chọn có thể tùy chỉnh và xác thực
+
+  ascii-text-drawer:
+    title: Vẽ chữ ASCII
+    description: Tạo biểu ngữ nghệ thuật ASCII từ văn bản

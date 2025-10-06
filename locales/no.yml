@@ -392,3 +392,7 @@ tools:
   text-to-binary:
     title: Tekst til ASCII binært
     description: Konverter tekst til sin ASCII binære representasjon og visa-versa.
+
+  html-to-markdown:
+    title: HTML til Markdown
+    description: Konverter HTML-innhold til Markdown-format med tilpassbare alternativer og validering

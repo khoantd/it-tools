@@ -16,7 +16,7 @@ const { isDarkTheme } = toRefs(styleStore);
       rel="noopener noreferrer"
       :aria-label="$t('home.nav.githubRepository')"
     >
-      <n-icon size="25" :component="IconBrandGithub" />
+      <n-icon size="25"><IconBrandGithub /></n-icon>
     </c-button>
   </c-tooltip>
 
@@ -29,19 +29,19 @@ const { isDarkTheme } = toRefs(styleStore);
       target="_blank"
       :aria-label="$t('home.nav.twitterXAccount')"
     >
-      <n-icon size="25" :component="IconBrandX" />
+      <n-icon size="25"><IconBrandX /></n-icon>
     </c-button>
   </c-tooltip>
 
   <c-tooltip :tooltip="$t('home.nav.about')" position="bottom">
     <c-button circle variant="text" to="/about" :aria-label="$t('home.nav.aboutLabel')">
-      <n-icon size="25" :component="IconInfoCircle" />
+      <n-icon size="25"><IconInfoCircle /></n-icon>
     </c-button>
   </c-tooltip>
   <c-tooltip :tooltip="isDarkTheme ? $t('home.nav.lightMode') : $t('home.nav.darkMode')" position="bottom">
     <c-button circle variant="text" :aria-label="$t('home.nav.mode')" @click="() => styleStore.toggleDark()">
-      <n-icon v-if="isDarkTheme" size="25" :component="IconSun" />
-      <n-icon v-else size="25" :component="IconMoon" />
+      <n-icon v-if="isDarkTheme" size="25"><IconSun /></n-icon>
+      <n-icon v-else size="25"><IconMoon /></n-icon>
     </c-button>
   </c-tooltip>
 </template>

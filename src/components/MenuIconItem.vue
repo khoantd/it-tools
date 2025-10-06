@@ -10,7 +10,7 @@ const theme = useThemeVars();
 
 <template>
   <div class="menu-icon-item">
-    <n-icon :component="tool.icon" />
+    <n-icon><component :is="tool.icon" /></n-icon>
     <div v-if="tool.isNew" class="badge" />
   </div>
 </template>

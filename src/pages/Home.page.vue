@@ -41,7 +41,7 @@ function onUpdateFavoriteTools() {
             :aria-label="$t('home.follow.twitterXAccount')"
           >X</a>.
           {{ $t('home.follow.thankYou') }}
-          <n-icon :component="IconHeart" />
+          <n-icon><IconHeart /></n-icon>
         </ColoredCard>
       </div>
 
@@ -50,7 +50,7 @@ function onUpdateFavoriteTools() {
           <h3 class="mb-5px mt-25px text-neutral-400 font-500">
             {{ $t('home.categories.favoriteTools') }}
             <c-tooltip :tooltip="$t('home.categories.favoritesDndToolTip')">
-              <n-icon :component="IconDragDrop" size="18" />
+              <n-icon size="18"><IconDragDrop /></n-icon>
             </c-tooltip>
           </h3>
           <Draggable

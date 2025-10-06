@@ -454,3 +454,48 @@ tools:
   text-to-binary:
     title: Text zu ASCII-Binär
     description: Konvertiere Text in seine ASCII-Binärrepräsentation und umgekehrt.
+
+  html-to-markdown:
+    title: HTML zu Markdown
+    description: Konvertiere HTML-Inhalte in Markdown-Format mit anpassbaren Optionen und Validierung
+    batch:
+      title: Stapelverarbeitung
+      description: Mehrere HTML-Dateien gleichzeitig verarbeiten
+      upload:
+        dragDrop: Mehrere HTML-Dateien hier hineinziehen
+        clickToUpload: oder klicken zum Auswählen
+        invalidFileType: Bitte HTML-Dateien (.html oder .htm) hochladen
+        fileReadError: 'Datei konnte nicht gelesen werden: {error}'
+      processing:
+        start: Verarbeitung starten
+        retry: Fehlgeschlagene wiederholen
+        pause: Pause
+        clear: Alle löschen
+        status:
+          pending: Wartend
+          processing: Verarbeitung
+          completed: Abgeschlossen
+          error: Fehler
+      export:
+        allAsZip: Alle als ZIP exportieren
+        selectedAsZip: Ausgewählte als ZIP exportieren
+        individual: Einzelne Dateien herunterladen
+        selectFiles: Dateien zum Exportieren auswählen
+      options:
+        maxConcurrent: Max. gleichzeitige Dateien
+        autoRetry: Fehlgeschlagene automatisch wiederholen
+        stopOnError: Bei erstem Fehler stoppen
+        namingConvention: Dateinamenskonvention
+        namingConventions:
+          original: Originaler Dateiname
+          timestamp: Mit Zeitstempel
+          indexed: Mit Index
+      preview:
+        title: Dateivorschau
+        original: Originales HTML
+        markdown: Konvertiertes Markdown
+      stats:
+        total: Gesamt
+        completed: Abgeschlossen
+        failed: Fehlgeschlagen
+        pending: Wartend

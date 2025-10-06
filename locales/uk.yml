@@ -70,3 +70,7 @@ tools:
     measurement: Вимірювання
     text: Текст
     data: Дані
+
+  html-to-markdown:
+    title: HTML в Markdown
+    description: Конвертувати HTML контент у формат Markdown з налаштовуваними опціями та валідацією

@@ -80,3 +80,48 @@ tools:
     copied: Le token a été copié
     length: Longueur
     tokenPlaceholder: Le token...
+
+  html-to-markdown:
+    title: HTML vers Markdown
+    description: Convertir du contenu HTML au format Markdown avec des options personnalisables et validation
+    batch:
+      title: Traitement par lot
+      description: Traiter plusieurs fichiers HTML simultanément
+      upload:
+        dragDrop: Glissez-déposez plusieurs fichiers HTML ici
+        clickToUpload: ou cliquez pour sélectionner des fichiers
+        invalidFileType: Veuillez télécharger des fichiers HTML (.html ou .htm)
+        fileReadError: 'Échec de la lecture du fichier : {error}'
+      processing:
+        start: Démarrer le traitement
+        retry: Réessayer les échecs
+        pause: Pause
+        clear: Tout effacer
+        status:
+          pending: En attente
+          processing: En cours
+          completed: Terminé
+          error: Erreur
+      export:
+        allAsZip: Exporter tout en ZIP
+        selectedAsZip: Exporter la sélection en ZIP
+        individual: Télécharger les fichiers individuels
+        selectFiles: Sélectionner les fichiers à exporter
+      options:
+        maxConcurrent: Fichiers simultanés max
+        autoRetry: Réessayer automatiquement les échecs
+        stopOnError: Arrêter à la première erreur
+        namingConvention: Convention de nommage
+        namingConventions:
+          original: Nom de fichier original
+          timestamp: Avec horodatage
+          indexed: Avec index
+      preview:
+        title: Aperçu du fichier
+        original: HTML original
+        markdown: Markdown converti
+      stats:
+        total: Total
+        completed: Terminé
+        failed: Échec
+        pending: En attente

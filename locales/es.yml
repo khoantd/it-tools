@@ -70,3 +70,48 @@ tools:
     measurement: Measurement
     text: Text
     data: Data
+
+  html-to-markdown:
+    title: HTML a Markdown
+    description: Convertir contenido HTML a formato Markdown con opciones personalizables y validación
+    batch:
+      title: Procesamiento por lotes
+      description: Procesar múltiples archivos HTML simultáneamente
+      upload:
+        dragDrop: Arrastra y suelta múltiples archivos HTML aquí
+        clickToUpload: o haz clic para seleccionar archivos
+        invalidFileType: Por favor sube archivos HTML (.html o .htm)
+        fileReadError: 'Error al leer el archivo: {error}'
+      processing:
+        start: Iniciar procesamiento
+        retry: Reintentar fallidos
+        pause: Pausar
+        clear: Limpiar todo
+        status:
+          pending: Pendiente
+          processing: Procesando
+          completed: Completado
+          error: Error
+      export:
+        allAsZip: Exportar todo como ZIP
+        selectedAsZip: Exportar seleccionados como ZIP
+        individual: Descargar archivos individuales
+        selectFiles: Seleccionar archivos para exportar
+      options:
+        maxConcurrent: Archivos simultáneos máx.
+        autoRetry: Reintentar automáticamente fallidos
+        stopOnError: Detener en primer error
+        namingConvention: Convención de nombres
+        namingConventions:
+          original: Nombre de archivo original
+          timestamp: Con marca de tiempo
+          indexed: Con índice
+      preview:
+        title: Vista previa del archivo
+        original: HTML original
+        markdown: Markdown convertido
+      stats:
+        total: Total
+        completed: Completado
+        failed: Fallido
+        pending: Pendiente

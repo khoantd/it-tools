@@ -388,3 +388,7 @@ tools:
   text-to-binary:
     title: 文本到 ASCII 二进制
     description: 将文本转换为其 ASCII 二进制表示形式，反之亦然。
+
+  html-to-markdown:
+    title: HTML 转 Markdown
+    description: 将 HTML 内容转换为 Markdown 格式，具有可自定义的选项和验证

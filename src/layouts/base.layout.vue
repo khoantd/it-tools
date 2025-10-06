@@ -97,12 +97,12 @@ const tools = computed<ToolCategory[]>(() => [
           :aria-label="$t('home.toggleMenu')"
           @click="styleStore.isMenuCollapsed = !styleStore.isMenuCollapsed"
         >
-          <NIcon size="25" :component="Menu2" />
+          <NIcon size="25"><Menu2 /></NIcon>
         </c-button>
 
         <c-tooltip :tooltip="$t('home.home')" position="bottom">
           <c-button to="/" circle variant="text" :aria-label="$t('home.home')">
-            <NIcon size="25" :component="Home2" />
+            <NIcon size="25"><Home2 /></NIcon>
           </c-button>
         </c-tooltip>
 
@@ -131,7 +131,7 @@ const tools = computed<ToolCategory[]>(() => [
             @click="() => tracker.trackEvent({ eventName: 'Support button clicked' })"
           >
             {{ $t('home.buyMeACoffee') }}
-            <NIcon v-if="!styleStore.isSmallScreen" :component="Heart" ml-2 />
+            <NIcon v-if="!styleStore.isSmallScreen" ml-2><Heart /></NIcon>
           </c-button>
         </c-tooltip>
       </div>
