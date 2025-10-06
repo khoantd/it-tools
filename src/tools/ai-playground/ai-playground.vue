@@ -207,8 +207,8 @@ watch(mcpEnabled, async (val) => {
 <template>
   <div class="ai-playground">
     <c-card :title="$t('tools.ai-playground.title')">
-      <div class="grid grid-cols-1 gap-12px lg:grid-cols-3">
-        <div class="lg:col-span-2">
+      <div class="grid grid-cols-1 gap-6px lg:grid-cols-6">
+        <div class="lg:col-span-3">
           <div class="messages" ref="messagesEl">
             <div v-for="m in messages" :key="m.id" class="msg" :class="m.role">
               <div class="role">{{ m.role }}</div>
@@ -241,7 +241,7 @@ watch(mcpEnabled, async (val) => {
             </div>
           </div>
         </div>
-        <div>
+        <div class="lg:col-span-3">
           <div class="panel">
             <NForm label-placement="top" :show-require-mark="false">
               <NFormItem label="Provider">
