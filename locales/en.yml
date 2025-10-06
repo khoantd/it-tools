@@ -229,6 +229,14 @@ tools:
     title: HTML to Markdown
     description: Convert HTML content to Markdown format with customizable options and validation
     batch:
+      headings:
+        processingMode: Processing Mode
+        batchUpload: Batch HTML Upload
+        processingControls: Processing Controls
+        exportOptions: Export Options
+        logs: Logs
+      actions:
+        clearLogs: Clear logs
       title: Batch Processing
       description: Process multiple HTML files simultaneously
       upload:

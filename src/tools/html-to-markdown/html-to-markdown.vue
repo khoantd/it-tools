@@ -382,7 +382,7 @@ onMounted(() => {
 <template>
   <div class="html-to-markdown-tool">
     <!-- Mode Selection -->
-    <c-card title="Processing Mode">
+    <c-card :title="$t('tools.html-to-markdown.batch.headings.processingMode')">
       <div class="mode-selection">
         <n-button 
           :type="mode === 'single' ? 'primary' : 'default'"
@@ -494,7 +494,7 @@ onMounted(() => {
     <!-- Batch Processing Mode -->
     <div v-if="mode === 'batch'">
       <!-- Batch Upload Section -->
-      <c-card title="Batch HTML Upload">
+      <c-card :title="$t('tools.html-to-markdown.batch.headings.batchUpload')">
         <div class="upload-area">
           <input 
             ref="batchFileInput"
@@ -514,10 +514,10 @@ onMounted(() => {
           >
             <n-icon :component="Upload" size="48" class="text-gray-400" />
             <n-text class="mt-2 text-sm text-gray-600">
-              Drag and drop multiple HTML files here
+              {{ $t('tools.html-to-markdown.batch.upload.dragDrop') }}
             </n-text>
             <n-text depth="3" class="text-xs text-gray-500">
-              or click to select files
+              {{ $t('tools.html-to-markdown.batch.upload.clickToUpload') }}
             </n-text>
           </div>
         </div>
@@ -571,24 +571,24 @@ onMounted(() => {
       </c-card>
 
       <!-- Batch Processing Controls -->
-      <c-card title="Processing Controls" class="mt-4">
+      <c-card :title="$t('tools.html-to-markdown.batch.headings.processingControls')" class="mt-4">
         <div class="processing-controls">
           <div class="progress-info mb-4">
             <div class="status-grid">
               <div class="status-item">
-                <span class="label">Total:</span>
+                <span class="label">{{ $t('tools.html-to-markdown.batch.stats.total') }}:</span>
                 <span class="value">{{ batchState.totalFiles }}</span>
               </div>
               <div class="status-item">
-                <span class="label">Completed:</span>
+                <span class="label">{{ $t('tools.html-to-markdown.batch.stats.completed') }}:</span>
                 <span class="value success">{{ batchState.completedFiles }}</span>
               </div>
               <div class="status-item">
-                <span class="label">Failed:</span>
+                <span class="label">{{ $t('tools.html-to-markdown.batch.stats.failed') }}:</span>
                 <span class="value error">{{ batchState.failedFiles }}</span>
               </div>
               <div class="status-item">
-                <span class="label">Pending:</span>
+                <span class="label">{{ $t('tools.html-to-markdown.batch.stats.pending') }}:</span>
                 <span class="value pending">{{ batchState.pendingFiles }}</span>
               </div>
             </div>
@@ -606,7 +606,7 @@ onMounted(() => {
               @click="startBatchProcessing"
             >
               <n-icon :component="PlayerPlay" />
-              Start Processing
+              {{ $t('tools.html-to-markdown.batch.processing.start') }}
             </c-button>
             
             <c-button 
@@ -614,17 +614,17 @@ onMounted(() => {
               :disabled="batchState.failedFiles === 0"
             >
               <n-icon :component="Refresh" />
-              Retry Failed ({{ batchState.failedFiles }})
+              {{ $t('tools.html-to-markdown.batch.processing.retry') }} ({{ batchState.failedFiles }})
             </c-button>
           </div>
         </div>
       </c-card>
 
       <!-- Export Options -->
-      <c-card title="Export Options" class="mt-4" v-if="completedFiles.length > 0">
+      <c-card :title="$t('tools.html-to-markdown.batch.headings.exportOptions')" class="mt-4" v-if="completedFiles.length > 0">
         <div class="export-controls">
           <div class="file-selection mb-4">
-            <n-text strong class="mb-2 block">Select files to export:</n-text>
+            <n-text strong class="mb-2 block">{{ $t('tools.html-to-markdown.batch.export.selectFiles') }}</n-text>
             <n-checkbox-group v-model:value="selectedFiles">
               <div class="checkbox-list">
                 <n-checkbox 
@@ -659,10 +659,10 @@ onMounted(() => {
       </c-card>
 
       <!-- Logs -->
-      <c-card title="Logs" class="mt-4">
+      <c-card :title="$t('tools.html-to-markdown.batch.headings.logs')" class="mt-4">
         <div class="flex justify-between items-center mb-2">
           <n-text depth="3">Real-time batch events</n-text>
-          <c-button size="small" @click="clearLogs">Clear logs</c-button>
+          <c-button size="small" @click="clearLogs">{{ $t('tools.html-to-markdown.batch.actions.clearLogs') }}</c-button>
         </div>
         <div class="log-container">
           <pre class="log-content">{{ logs.join('\n') }}</pre>
@@ -748,13 +748,13 @@ onMounted(() => {
     </c-card>
 
     <!-- File Preview Modal -->
-    <n-modal v-model:show="showPreview" preset="card" title="File Preview" size="huge">
+    <n-modal v-model:show="showPreview" preset="card" :title="$t('tools.html-to-markdown.batch.preview.title')" size="huge">
       <div v-if="previewFile" class="file-preview">
         <n-tabs v-model:value="activeTab">
-          <n-tab-pane name="original" tab="Original HTML">
+          <n-tab-pane name="original" :tab="$t('tools.html-to-markdown.batch.preview.original')">
             <pre class="code-preview">{{ previewFile.originalContent }}</pre>
           </n-tab-pane>
-          <n-tab-pane name="markdown" tab="Converted Markdown">
+          <n-tab-pane name="markdown" :tab="$t('tools.html-to-markdown.batch.preview.markdown')">
             <pre class="code-preview">{{ previewFile.markdownContent }}</pre>
           </n-tab-pane>
         </n-tabs>

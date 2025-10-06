@@ -385,6 +385,55 @@ tools:
   html-to-markdown:
     title: HTML sang Markdown
     description: Chuyển đổi nội dung HTML sang định dạng Markdown với các tùy chọn có thể tùy chỉnh và xác thực
+    batch:
+      headings:
+        processingMode: Chế độ xử lý
+        batchUpload: Tải lên HTML theo lô
+        processingControls: Điều khiển xử lý
+        exportOptions: Tùy chọn xuất
+        logs: Nhật ký
+      actions:
+        clearLogs: Xóa nhật ký
+      title: Xử lý theo lô
+      description: Xử lý nhiều tệp HTML cùng lúc
+      upload:
+        dragDrop: Kéo và thả nhiều tệp HTML vào đây
+        clickToUpload: hoặc nhấp để chọn tệp
+        invalidFileType: Vui lòng tải lên tệp HTML (.html hoặc .htm)
+        fileReadError: 'Không thể đọc tệp: {error}'
+      processing:
+        start: Bắt đầu xử lý
+        retry: Thử lại lỗi
+        pause: Tạm dừng
+        clear: Xóa tất cả
+        status:
+          pending: Chờ
+          processing: Xử lý
+          completed: Hoàn thành
+          error: Lỗi
+      export:
+        allAsZip: Xuất tất cả dưới dạng ZIP
+        selectedAsZip: Xuất lựa chọn dưới dạng ZIP
+        individual: Tải xuống tệp riêng lẻ
+        selectFiles: Chọn tệp để xuất
+      options:
+        maxConcurrent: Số lượng tệp tối đa
+        autoRetry: Tự động thử lại lỗi
+        stopOnError: Dừng khi lỗi
+        namingConvention: Quy tắc đặt tên tệp
+        namingConventions:
+          original: Tên tệp gốc
+          timestamp: Với timestamp
+          indexed: Với index
+      preview:
+        title: Xem tệp
+        original: Original HTML
+        markdown: Đã chuyển đổi Markdown
+      stats:
+        total: Tổng số
+        completed: Hoàn thành
+        failed: Lỗi
+        pending: Chờ
 
   ascii-text-drawer:
     title: Vẽ chữ ASCII
