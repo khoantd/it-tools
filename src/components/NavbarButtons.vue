@@ -8,7 +8,7 @@ const { isDarkTheme } = toRefs(styleStore);
 
 <template>
   <div class="navbar-buttons">
-  <c-tooltip :tooltip="$t('home.nav.github')" position="bottom">
+  <!-- <c-tooltip :tooltip="$t('home.nav.github')" position="bottom">
     <c-button
       circle
       variant="text"
@@ -19,7 +19,7 @@ const { isDarkTheme } = toRefs(styleStore);
     >
       <n-icon size="25"><IconBrandGithub /></n-icon>
     </c-button>
-  </c-tooltip>
+  </c-tooltip> -->
 
   <!-- <c-tooltip :tooltip="$t('home.nav.twitterX')" position="bottom">
     <c-button
@@ -53,8 +53,8 @@ const { isDarkTheme } = toRefs(styleStore);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 20px;
-  padding-top: -5px;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }
 
 .navbar-button {

@@ -2,7 +2,7 @@
 import { ref, computed, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useStorage } from '@vueuse/core';
 import { NInput, NSelect, NInputNumber, NButton, NForm, NFormItem, NSwitch } from 'naive-ui';
-import { IconChevronDown, IconChevronUp, IconSettings, IconApi, IconHistory, IconX, IconMenu2 } from '@tabler/icons-vue';
+import { IconChevronDown, IconChevronUp, IconSettings, IconApi, IconHistory, IconX, IconMenu2, IconMessageShare } from '@tabler/icons-vue';
 import { marked } from 'marked';
 import { makeClient, type ProviderConfig, type ToolDefinition } from './services/llm.client';
 import { usePresetStore } from './services/presets.store';
@@ -42,13 +42,57 @@ const logsExpanded = useStorage('ai:logsExpanded', false);
 
 // Layout state
 const settingsCollapsed = useStorage('ai:settingsCollapsed', false);
-const activeSettingsTab = useStorage('ai:activeSettingsTab', 'provider');
+const activeSettingsTab = useStorage('ai:activeSettingsTab', 'llm');
+
+// New layout controls
+const layoutMode = useStorage<'split' | 'compact'>('ai:layoutMode', 'split');
+const leftPaneWidth = useStorage<number>('ai:leftPaneWidth', 75); // percent
+const isResizing = ref(false);
+function onGutterPointerDown(ev: PointerEvent) {
+  isResizing.value = true;
+  const startX = ev.clientX;
+  const container = document.querySelector('.split-container') as HTMLElement | null;
+  const startLeft = leftPaneWidth.value;
+  const onMove = (e: PointerEvent) => {
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const px = e.clientX - rect.left;
+    const pct = Math.max(40, Math.min(75, (px / rect.width) * 100));
+    leftPaneWidth.value = Math.round(pct);
+  };
+  const onUp = () => {
+    isResizing.value = false;
+    window.removeEventListener('pointermove', onMove as any);
+    window.removeEventListener('pointerup', onUp as any);
+  };
+  window.addEventListener('pointermove', onMove as any);
+  window.addEventListener('pointerup', onUp as any);
+}
+function onGutterDoubleClick() {
+  leftPaneWidth.value = 75;
+}
 
 // Tool integration state
 const isProcessingToolCall = ref(false);
 
 function add(role: ChatRole, content: string) {
   messages.value.push({ id: crypto.randomUUID(), role, content });
+}
+
+function onComposerKeydown(ev: KeyboardEvent) {
+  if ((ev.metaKey || ev.ctrlKey) && ev.key === 'Enter') {
+    ev.preventDefault();
+    if (canSend.value) {
+      // Queue send to avoid interfering with IME composition
+      Promise.resolve().then(() => send());
+    }
+  }
+}
+
+// Attachments: programmatic file chooser
+const fileInputEl = ref<HTMLInputElement | null>(null);
+function openFileChooser() {
+  fileInputEl.value?.click();
 }
 
 // Logging functions
@@ -351,9 +395,171 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
 </script>
 
 <template>
-  <div class="ai-playground">
-    <c-card :title="$t('tools.ai-playground.title')">
-      <div class="layout-container">
+  <div >
+
+    <!-- <c-card :title="$t('tools.ai-playground.title')"> -->
+      <!-- Split vs Compact Views -->
+      <div v-if="layoutMode === 'split'" class="split-container" :style="{ '--left': leftPaneWidth + '%'}">
+        <!-- Left: Chat -->
+        <div class="left-pane">
+          <div class="messages" ref="messagesEl">
+            <div v-for="m in messages" :key="m.id" class="msg" :class="[m.role, { 'tool-call': m.tool_calls, 'tool-result': m.role === 'tool' }]">
+              <div class="role">
+                {{ m.role }}
+                <span v-if="m.tool_calls" class="tool-indicator">🔧</span>
+                <span v-if="m.role === 'tool'" class="tool-indicator">⚙️</span>
+              </div>
+              <div v-if="m.tool_calls" class="tool-calls">
+                <div v-for="toolCall in m.tool_calls" :key="toolCall.id" class="tool-call">
+                  <div class="tool-name">🔧 {{ toolCall.function?.name || 'Unknown Tool' }}</div>
+                  <div class="tool-args">{{ formatToolArgs(toolCall.function?.arguments) }}</div>
+                </div>
+              </div>
+              <div v-else-if="m.role === 'tool'" class="tool-result">
+                <pre>{{ m.content }}</pre>
+              </div>
+              <div v-else class="content">
+                <div v-if="m.role !== 'assistant'" v-text="m.content"></div>
+                <div v-else v-html="renderMarkdown(m.content)"></div>
+              </div>
+              <div v-if="m.content && m.role !== 'tool'" class="msg-actions">
+                <NButton size="tiny" quaternary @click="copy(m.content)">Copy</NButton>
+                <NButton size="tiny" quaternary @click="input = (input || '') + `\n> ${m.content}\n`">Quote</NButton>
+              </div>
+            </div>
+          </div>
+          <div class="composer sticky">
+            <NInput v-model:value="input" @keyup="onInputKeyup" @keydown="onComposerKeydown" type="textarea" :autosize="{ minRows: 3, maxRows: 8 }" :placeholder="$t('tools.ai-playground.input')" />
+            <div class="attach-row">
+              <NButton quaternary size="small" @click="openFileChooser">Attach files</NButton>
+              <input ref="fileInputEl" type="file" multiple accept="text/plain,image/*" @change="onAttach" hidden />
+              <span class="att-count" v-if="attachments.length">{{ attachments.length }} selected</span>
+              <div class="spacer" />
+              <NButton type="primary" :disabled="!canSend || isProcessingToolCall" @click="send">
+                <span v-if="isStreaming">Streaming...</span>
+                <span v-else-if="isProcessingToolCall">Using Tools...</span>
+                <span v-else>{{ $t('tools.ai-playground.actions.send') }}</span>
+              </NButton>
+              <NButton class="btn-space" :disabled="!isStreaming && !isProcessingToolCall" @click="stop">{{ $t('tools.ai-playground.actions.stop') }}</NButton>
+              <NButton quaternary @click="clearChat">{{ $t('tools.ai-playground.actions.clear') }}</NButton>
+            </div>
+            <div class="attachments" v-if="attachments.length">
+              <div class="att-item" v-for="(f, i) in attachments" :key="i">
+                <span class="att-name">{{ f.name }}</span>
+                <NButton size="tiny" quaternary @click="removeAttachment(i)">x</NButton>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Gutter -->
+        <div class="gutter" :class="{ active: isResizing }" @pointerdown.stop.prevent="onGutterPointerDown" @dblclick="onGutterDoubleClick"></div>
+        
+        <!-- Right: Context/Tools/History -->
+        <div class="right-pane">
+          <div class="settings-tabs right">
+            <button 
+              class="tab-button" 
+              :class="{ active: activeSettingsTab === 'chat' }"
+              @click="activeSettingsTab = 'chat'"
+            >
+              <n-icon size="16"><IconMessageShare /></n-icon>
+              Context
+            </button>
+            <button 
+              class="tab-button" 
+              :class="{ active: activeSettingsTab === 'llm' }"
+              @click="activeSettingsTab = 'llm'"
+            >
+              <n-icon size="16"><IconApi /></n-icon>
+              LLM
+            </button>
+            <button 
+              class="tab-button" 
+              :class="{ active: activeSettingsTab === 'history' }"
+              @click="activeSettingsTab = 'history'"
+            >
+              <n-icon size="16"><IconHistory /></n-icon>
+              History
+            </button>
+          </div>
+          <div class="tab-content">
+            <!-- Context -->
+            <div v-if="activeSettingsTab === 'chat'" class="settings-panel">
+              <div class="section-header"><h3>System Prompt</h3></div>
+              <NInput v-model:value="systemPrompt" type="textarea" :autosize="{ minRows: 3, maxRows: 8 }" />
+              <div class="section-header"><h3>Attachments</h3></div>
+              <div v-if="!attachments.length" class="preset-item">No attachments</div>
+              <div v-else class="attachments">
+                <div class="att-item" v-for="(f, i) in attachments" :key="i">
+                  <span class="att-name">{{ f.name }}</span>
+                  <NButton size="tiny" quaternary @click="removeAttachment(i)">x</NButton>
+                </div>
+              </div>
+            </div>
+
+            <!-- LLM Settings -->
+            <div v-if="activeSettingsTab === 'llm'" class="settings-panel">
+              <div class="section-header"><h3>LLM Settings</h3></div>
+              <NForm label-placement="top" :show-require-mark="false">
+                <NFormItem label="Provider">
+                  <NSelect v-model:value="providerKind" :options="[
+                    { label: 'OpenAI-compatible', value: 'openai' },
+                    { label: 'Anthropic', value: 'anthropic' },
+                    { label: 'LiteLLM (OpenAI-compatible)', value: 'litellm' }
+                  ]" />
+                </NFormItem>
+                <NFormItem :label="$t('tools.ai-playground.settings.baseUrl')">
+                  <NInput v-model:value="providerBaseUrl" :placeholder="baseUrlPlaceholder" />
+                </NFormItem>
+                <NFormItem :label="$t('tools.ai-playground.settings.apiKey')">
+                  <NInput v-model:value="apiKey" type="password" placeholder="Enter API key" />
+                </NFormItem>
+                <NFormItem :label="$t('tools.ai-playground.settings.model')">
+                  <NInput v-model:value="model" :placeholder="modelPlaceholder" />
+                </NFormItem>
+                <NFormItem :label="$t('tools.ai-playground.settings.temperature')">
+                  <NInputNumber v-model:value="temperature" :min="0" :max="2" :step="0.1" />
+                </NFormItem>
+              </NForm>
+            </div>
+
+
+            <!-- History -->
+            <div v-if="activeSettingsTab === 'history'" class="settings-panel">
+              <div class="section-header">
+                <h3>Interaction Logs</h3>
+              </div>
+              <div class="log-panel">
+                <div class="log-header" @click="logsExpanded = !logsExpanded">
+                  <span>Logs ({{ logs.length }})</span>
+                  <div class="log-actions">
+                    <NButton size="tiny" quaternary @click.stop="exportLogs">Export</NButton>
+                    <NButton size="tiny" quaternary @click.stop="clearLogs">Clear</NButton>
+                    <n-icon size="16">
+                      <IconChevronDown v-if="!logsExpanded" />
+                      <IconChevronUp v-else />
+                    </n-icon>
+                  </div>
+                </div>
+                <transition name="collapse">
+                  <div v-show="logsExpanded" class="log-body">
+                    <div v-for="log in logs.slice().reverse()" :key="log.id" class="log-entry" :class="[log.type, log.action]">
+                      <div class="log-timestamp">{{ formatTimestamp(log.timestamp) }}</div>
+                      <div class="log-type">{{ log.type.toUpperCase() }} - {{ log.action }}</div>
+                      <pre class="log-data">{{ JSON.stringify(log.data, null, 2) }}</pre>
+                    </div>
+                    <div v-if="!logs.length" class="log-empty">No logs yet</div>
+                  </div>
+                </transition>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compact view falls back to current single-column tabs UI -->
+      <div v-else class="layout-container">
         <!-- Chat Section -->
         <div class="chat-section" :class="{ 'full-width': settingsCollapsed }">
           <div class="messages" ref="messagesEl">
@@ -389,7 +595,7 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
             </div>
           </div>
           <div class="composer">
-            <NInput v-model:value="input" @keyup="onInputKeyup" type="textarea" :autosize="{ minRows: 3, maxRows: 8 }" :placeholder="$t('tools.ai-playground.input')" />
+            <NInput v-model:value="input" @keyup="onInputKeyup" @keydown="onComposerKeydown" type="textarea" :autosize="{ minRows: 3, maxRows: 8 }" :placeholder="$t('tools.ai-playground.input')" />
             <div class="attachments" v-if="attachments.length">
               <div class="att-item" v-for="(f, i) in attachments" :key="i">
                 <span class="att-name">{{ f.name }}</span>
@@ -397,10 +603,8 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
               </div>
             </div>
             <div class="attach-row">
-              <label class="import-label">
-                <NButton quaternary size="small">Attach files</NButton>
-                <input type="file" multiple accept="text/plain,image/*" @change="onAttach" hidden />
-              </label>
+              <NButton quaternary size="small" @click="openFileChooser">Attach files</NButton>
+              <input ref="fileInputEl" type="file" multiple accept="text/plain,image/*" @change="onAttach" hidden />
               <span class="att-count" v-if="attachments.length">{{ attachments.length }} selected</span>
             </div>
             <div class="actions">
@@ -416,9 +620,9 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
         </div>
 
         <!-- Settings Section -->
-        <div class="settings-section" :class="{ 'collapsed': settingsCollapsed }">
+        <!-- <div class="settings-section" :class="{ 'collapsed': settingsCollapsed }"> -->
           <!-- Settings Toggle Button -->
-          <div class="settings-toggle">
+          <!-- <div class="settings-toggle">
             <NButton 
               quaternary 
               size="small" 
@@ -430,19 +634,27 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
                 <IconX v-else />
               </n-icon>
             </NButton>
-          </div>
+          </div> -->
 
           <!-- Settings Content -->
-          <div v-if="!settingsCollapsed" class="settings-content">
+          <!-- <div v-if="!settingsCollapsed" class="settings-content"> -->
             <!-- Settings Tabs -->
             <div class="settings-tabs">
               <button 
                 class="tab-button" 
-                :class="{ active: activeSettingsTab === 'provider' }"
-                @click="activeSettingsTab = 'provider'"
+                :class="{ active: activeSettingsTab === 'chat' }"
+                @click="activeSettingsTab = 'chat'"
+              >
+                <n-icon size="16"><IconMessageShare /></n-icon>
+                Chat
+              </button>
+              <button 
+                class="tab-button" 
+                :class="{ active: activeSettingsTab === 'llm' }"
+                @click="activeSettingsTab = 'llm'"
               >
                 <n-icon size="16"><IconApi /></n-icon>
-                Provider
+                LLM
               </button>
               <button 
                 class="tab-button" 
@@ -456,10 +668,63 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
 
             <!-- Tab Content -->
             <div class="tab-content">
-              <!-- Provider Settings Tab -->
-              <div v-if="activeSettingsTab === 'provider'" class="settings-panel">
+              <!-- Chat Tab -->
+              <div v-if="activeSettingsTab === 'chat'" class="settings-panel chat-panel">
+                <div class="two-col">
+                  <!-- Left: Chat -->
+                  <div class="panel">
+                    <div class="section-header"><h3>Chat</h3></div>
+                    <div class="messages" ref="messagesEl">
+                      <div v-for="m in messages" :key="m.id" class="msg" :class="m.role">
+                        <div class="role">{{ m.role }}</div>
+                        <div v-html="renderMarkdown(m.content)"></div>
+                        <div class="msg-actions">
+                          <button class="copy-code-btn">Copy code</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="composer">
+                      <NInput v-model:value="input" @keyup="onInputKeyup" @keydown="onComposerKeydown" type="textarea" :autosize="{ minRows: 3, maxRows: 8 }" placeholder="Type a message and press Send..." />
+                      <div class="actions">
+                        <NButton type="primary" @click="send">Send</NButton>
+                        <NButton quaternary @click="stop">Stop</NButton>
+                        <NButton quaternary @click="clearChat">Clear chat</NButton>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right: Quick Settings -->
+                  <div class="panel">
+                    <div class="section-header"><h3>API Configuration</h3></div>
+                    <NForm label-placement="top" :show-require-mark="false">
+                      <NFormItem label="Provider">
+                        <NSelect v-model:value="providerKind" :options="[
+                          { label: 'OpenAI-compatible', value: 'openai' },
+                          { label: 'Anthropic', value: 'anthropic' },
+                          { label: 'LiteLLM (OpenAI-compatible)', value: 'litellm' }
+                        ]" />
+                      </NFormItem>
+                      <NFormItem :label="$t('tools.ai-playground.settings.baseUrl')">
+                        <NInput v-model:value="providerBaseUrl" :placeholder="baseUrlPlaceholder" />
+                      </NFormItem>
+                      <NFormItem :label="$t('tools.ai-playground.settings.apiKey')">
+                        <NInput v-model:value="apiKey" type="password" placeholder="Enter API key" />
+                      </NFormItem>
+                      <NFormItem :label="$t('tools.ai-playground.settings.model')">
+                        <NInput v-model:value="model" :placeholder="modelPlaceholder" />
+                      </NFormItem>
+                      <NFormItem :label="$t('tools.ai-playground.settings.temperature')">
+                        <NInputNumber v-model:value="temperature" :min="0" :max="2" :step="0.1" />
+                      </NFormItem>
+                    </NForm>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LLM Settings Tab -->
+              <div v-if="activeSettingsTab === 'llm'" class="settings-panel">
                 <div class="section-header">
-                  <h3>API Configuration</h3>
+                  <h3>LLM Settings</h3>
                 </div>
                 <NForm label-placement="top" :show-require-mark="false">
                   <NFormItem label="Provider">
@@ -485,29 +750,9 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
                     <NInput v-model:value="systemPrompt" type="textarea" :autosize="{ minRows: 3, maxRows: 8 }" />
                   </NFormItem>
                 </NForm>
-
-                <div class="section-header">
-                  <h3>Presets</h3>
-                </div>
-                <div class="preset-actions">
-                  <NButton @click="savePreset" type="primary" tertiary>Save preset</NButton>
-                  <NButton @click="exportPresets" quaternary>Export</NButton>
-                  <label class="import-label">
-                    Import
-                    <input type="file" accept="application/json" @change="importPresets" hidden />
-                  </label>
-                </div>
-                
-                <div v-if="presets.length" class="preset-list">
-                  <div class="preset-item" v-for="p in presets" :key="p.id">
-                    <div class="preset-name">{{ p.name }}</div>
-                    <div class="preset-buttons">
-                      <NButton size="small" @click="loadPreset(p.id)">Load</NButton>
-                      <NButton size="small" quaternary @click="remove(p.id)">Remove</NButton>
-                    </div>
-                  </div>
-                </div>
               </div>
+
+              
 
 
               <!-- History Settings Tab -->
@@ -540,33 +785,76 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- </div> -->
       </div>
-    </c-card>
+    <!-- </c-card> -->
   </div>
 </template>
 
 <style scoped>
 /* Main Layout */
 .ai-playground { 
-  max-width: 1400px; 
+  max-width: 1100px; 
   margin: 0 auto; 
   padding: 0 16px;
 }
 
+/* Header toolbar */
+.header-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+.header-toolbar .left-controls,
+.header-toolbar .right-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.header-toolbar .ctrl.url { width: 220px; }
+.header-toolbar .ctrl.model { width: 160px; }
+.header-toolbar .ctrl.temp { width: 90px; }
+.header-toolbar .divider { width: 1px; height: 24px; background: #e5e7eb; margin: 0 4px; }
+
 .layout-container {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: 1fr; /* single column now that chat lives in tabs */
   gap: 20px;
   min-height: 600px;
 }
+
+/* Split container */
+.split-container {
+  --left: 75%;
+  display: grid;
+  grid-template-columns: var(--left) 12px 1fr;
+  gap: 0;
+  min-height: 600px;
+}
+.left-pane, .right-pane { min-height: 600px; }
+.left-pane { display: flex; flex-direction: column; }
+.left-pane .messages { flex: 1; }
+.composer.sticky { position: sticky; bottom: 0; background: #fff; padding-top: 8px; }
+.gutter { position: relative; cursor: col-resize; background: #f3f4f6; transition: background 0.15s ease; }
+.gutter::before { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 4px; height: 24px; border-radius: 2px; background: #d1d5db; }
+.gutter:hover { background: #eaecef; }
+.gutter.active { background: #e5e7eb; }
 
 /* Chat Section */
 .chat-section {
   display: flex;
   flex-direction: column;
   min-height: 600px;
+  width: auto; /* allow chat to take remaining space */
 }
 
 .chat-section.full-width {
@@ -580,9 +868,13 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   padding: 16px; 
   flex: 1;
   min-height: 400px; 
-  max-height: 70vh; 
+  max-height: 65vh; 
   overflow: auto;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chat-panel .messages {
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
 }
 
 .msg { 
@@ -698,20 +990,16 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   gap: 12px; 
 }
 
-.composer textarea { 
-  width: 100%; 
-  border: 2px solid #e5e7eb; 
-  border-radius: 12px; 
-  padding: 12px 16px; 
-  min-height: 100px;
-  font-size: 14px;
-  transition: border-color 0.2s ease;
+.chat-panel :deep(textarea.n-input__textarea-el) {
+  border: 2px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  transition: border-color 0.2s ease !important;
 }
 
-.composer textarea:focus {
-  border-color: #3b82f6;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+.chat-panel :deep(.n-input--focus) textarea.n-input__textarea-el {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
 }
 
 .composer .actions { 
@@ -719,6 +1007,7 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   gap: 12px; 
   justify-content: flex-end;
 }
+.composer .actions .btn-space { margin-left: 8px; }
 
 .attachments { 
   display: flex; 
@@ -742,6 +1031,7 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   justify-content: space-between; 
   align-items: center;
 }
+.attach-row .spacer { flex: 1; }
 
 /* Settings Section */
 .settings-section {
@@ -750,7 +1040,7 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   background: #fafafa;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
-  overflow: hidden;
+  overflow: visible; /* allow dropdowns/menus to overflow */
   transition: all 0.3s ease;
 }
 
@@ -808,13 +1098,32 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
 
 .tab-content {
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
   padding: 16px;
 }
 
 .settings-panel {
   display: grid;
   gap: 16px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* mimic Bcrypt two-panels */
+  gap: 24px;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+@media (max-width: 1024px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
 }
 
 .section-header {
@@ -982,13 +1291,16 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .split-container { grid-template-columns: 1fr; }
+  .gutter { display: none; }
+  .right-pane { margin-top: 12px; }
   .layout-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* stack */
     gap: 16px;
   }
   
   .settings-section {
-    order: -1;
+    order: -1; /* move settings above chat */
   }
   
   .settings-section.collapsed {
@@ -997,16 +1309,10 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   }
   
   .settings-content {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 0 0 12px 12px;
-    z-index: 10;
-    max-height: 60vh;
-    overflow-y: auto;
+    position: static;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
   }
 }
 
@@ -1015,6 +1321,10 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
     padding: 0 8px;
   }
   
+  .layout-container {
+    gap: 12px;
+  }
+
   .messages {
     padding: 12px;
     border-radius: 8px;

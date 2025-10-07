@@ -59,7 +59,10 @@ export class OpenAIClient implements LLMClient {
   constructor(private cfg: OpenAIConfig) {}
 
   async *createChatCompletion(opts: { messages: ChatMessageInput[]; params: ChatParams; tools?: ToolDefinition[]; signal?: AbortSignal }): AsyncIterable<StreamChunk> {
-    const url = `${this.cfg.baseUrl.replace(/\/$/, '')}/chat/completions`;
+    const base = this.cfg.baseUrl.replace(/\/$/, '');
+    // Ensure OpenAI-compatible base URLs include /v1 (LiteLLM often omits it)
+    const apiBase = base.endsWith('/v1') ? base : `${base}/v1`;
+    const url = `${apiBase}/chat/completions`;
     const body: any = {
       model: opts.params.model,
       temperature: opts.params.temperature,
