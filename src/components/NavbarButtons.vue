@@ -7,6 +7,7 @@ const { isDarkTheme } = toRefs(styleStore);
 </script>
 
 <template>
+  <div class="navbar-buttons">
   <c-tooltip :tooltip="$t('home.nav.github')" position="bottom">
     <c-button
       circle
@@ -20,7 +21,7 @@ const { isDarkTheme } = toRefs(styleStore);
     </c-button>
   </c-tooltip>
 
-  <c-tooltip :tooltip="$t('home.nav.twitterX')" position="bottom">
+  <!-- <c-tooltip :tooltip="$t('home.nav.twitterX')" position="bottom">
     <c-button
       circle
       variant="text"
@@ -31,25 +32,39 @@ const { isDarkTheme } = toRefs(styleStore);
     >
       <n-icon size="25"><IconBrandX /></n-icon>
     </c-button>
-  </c-tooltip>
+  </c-tooltip> -->
 
-  <c-tooltip :tooltip="$t('home.nav.about')" position="bottom">
+  <!-- <c-tooltip :tooltip="$t('home.nav.about')" position="bottom">
     <c-button circle variant="text" to="/about" :aria-label="$t('home.nav.aboutLabel')">
       <n-icon size="25"><IconInfoCircle /></n-icon>
     </c-button>
-  </c-tooltip>
+  </c-tooltip> -->
   <c-tooltip :tooltip="isDarkTheme ? $t('home.nav.lightMode') : $t('home.nav.darkMode')" position="bottom">
     <c-button circle variant="text" :aria-label="$t('home.nav.mode')" @click="() => styleStore.toggleDark()">
       <n-icon v-if="isDarkTheme" size="25"><IconSun /></n-icon>
       <n-icon v-else size="25"><IconMoon /></n-icon>
     </c-button>
   </c-tooltip>
+</div>
 </template>
 
 <style lang="less" scoped>
+.navbar-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-top: -5px;
+}
+
+.navbar-button {
+  margin-right: 5px;
+}
+
 .n-button {
   &:not(:last-child) {
     margin-right: 5px;
   }
 }
+
 </style>

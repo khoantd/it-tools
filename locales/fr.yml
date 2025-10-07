@@ -9,6 +9,23 @@ home:
   home: Accueil
   uiLib: 'UI Lib'
   buyMeACoffee: 'Soutenez IT-Tools'
+  search:
+    placeholder: 'Rechercher des outils ou raccourcis (ex: "json" ou "g: typescript")'
+    noResults: 'Aucun résultat trouvé'
+    externalShortcuts: 'Raccourcis externes'
+    pressEnter: 'Appuyez sur Entrée pour rechercher'
+  tips:
+    categories:
+      search: 'Recherche'
+      shortcuts: 'Raccourcis'
+      tools: 'Outils'
+      general: 'Général'
+    play: 'Lecture auto'
+    pause: 'Pause'
+    previous: 'Conseil précédent'
+    next: 'Conseil suivant'
+    random: 'Conseil aléatoire'
+    close: 'Fermer les conseils'
   follow:
     title: 'Vous aimez it-tools ?'
     p1: 'Soutenez-nous avec une star sur'

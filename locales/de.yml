@@ -17,6 +17,23 @@ home:
   uiLib: UI-Bibliothek
   support: Unterstütze die Entwicklung von IT-Tools
   buyMeACoffee: Kauf mir einen Kaffee
+  search:
+    placeholder: 'Tools oder Shortcuts suchen (z.B. "json" oder "g: typescript")'
+    noResults: 'Keine Ergebnisse gefunden'
+    externalShortcuts: 'Externe Shortcuts'
+    pressEnter: 'Enter drücken zum Suchen'
+  tips:
+    categories:
+      search: 'Suche'
+      shortcuts: 'Shortcuts'
+      tools: 'Tools'
+      general: 'Allgemein'
+    play: 'Abspielen'
+    pause: 'Pausieren'
+    previous: 'Vorheriger Tipp'
+    next: 'Nächster Tipp'
+    random: 'Zufälliger Tipp'
+    close: 'Tipps schließen'
   follow:
     title: Magst du IT-Tools?
     p1: Gib uns einen Stern auf

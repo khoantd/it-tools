@@ -10,6 +10,23 @@ home:
   uiLib: 'UI Lib'
   support: 'Apoyar el desarrollo de IT-Tools'
   buyMeACoffee: 'Buy me a coffee'
+  search:
+    placeholder: 'Buscar herramientas o atajos (ej: "json" o "g: typescript")'
+    noResults: 'No se encontraron resultados'
+    externalShortcuts: 'Atajos externos'
+    pressEnter: 'Presiona Enter para buscar'
+  tips:
+    categories:
+      search: 'Búsqueda'
+      shortcuts: 'Atajos'
+      tools: 'Herramientas'
+      general: 'General'
+    play: 'Reproducir'
+    pause: 'Pausar'
+    previous: 'Consejo anterior'
+    next: 'Siguiente consejo'
+    random: 'Consejo aleatorio'
+    close: 'Cerrar consejos'
   follow:
     title: 'Te gustan las it-tools?'
     p1: 'Danos una estrella en'

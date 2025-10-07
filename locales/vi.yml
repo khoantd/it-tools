@@ -10,6 +10,23 @@ home:
   uiLib: 'Thư viện UI'
   support: 'Hỗ trợ phát triển IT Tools'
   buyMeACoffee: 'Ủng hộ tác giả'
+  search:
+    placeholder: 'Tìm kiếm công cụ hoặc phím tắt (vd: "json" hoặc "g: typescript")'
+    noResults: 'Không tìm thấy kết quả'
+    externalShortcuts: 'Phím tắt bên ngoài'
+    pressEnter: 'Nhấn Enter để tìm kiếm'
+  tips:
+    categories:
+      search: 'Tìm kiếm'
+      shortcuts: 'Phím tắt'
+      tools: 'Công cụ'
+      general: 'Chung'
+    play: 'Tự động phát'
+    pause: 'Tạm dừng'
+    previous: 'Mẹo trước'
+    next: 'Mẹo tiếp theo'
+    random: 'Mẹo ngẫu nhiên'
+    close: 'Đóng mẹo'
   follow:
     title: 'Bạn thích IT-tools?'
     p1: 'Hãy cho chúng tôi một ngôi sao trên'

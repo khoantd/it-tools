@@ -10,6 +10,23 @@ home:
   uiLib: 'UI Бібліотека'
   support: 'Підтримка розробки IT Tools'
   buyMeACoffee: 'Купи мені каву'
+  search:
+    placeholder: 'Пошук інструментів або швидких посилань (наприклад: "json" або "g: typescript")'
+    noResults: 'Результатів не знайдено'
+    externalShortcuts: 'Зовнішні швидкі посилання'
+    pressEnter: 'Натисніть Enter для пошуку'
+  tips:
+    categories:
+      search: 'Пошук'
+      shortcuts: 'Швидкі посилання'
+      tools: 'Інструменти'
+      general: 'Загальне'
+    play: 'Відтворити'
+    pause: 'Пауза'
+    previous: 'Попередня порада'
+    next: 'Наступна порада'
+    random: 'Випадкова порада'
+    close: 'Закрити поради'
   follow:
     title: 'Вам подобаються інструменти IT?'
     p1: 'Додайте нам зірку на'

@@ -10,6 +10,23 @@ home:
   uiLib: 'UI Lib'
   support: 'Support IT-Tools development'
   buyMeACoffee: 'Buy me a coffee'
+  search:
+    placeholder: 'Search tools or shortcuts (e.g., "json" or "g: typescript")'
+    noResults: 'No results found'
+    externalShortcuts: 'External shortcuts'
+    pressEnter: 'Press Enter to search'
+  tips:
+    categories:
+      search: 'Search'
+      shortcuts: 'Shortcuts'
+      tools: 'Tools'
+      general: 'General'
+    play: 'Auto-play'
+    pause: 'Pause'
+    previous: 'Previous tip'
+    next: 'Next tip'
+    random: 'Random tip'
+    close: 'Close tips'
   follow:
     title: 'You like it-tools?'
     p1: 'Give us a star on'

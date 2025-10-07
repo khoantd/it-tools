@@ -10,6 +10,23 @@ home:
   uiLib: 'UI Bib'
   support: 'Støtt utviklingen av IT-Tools'
   buyMeACoffee: 'Kjøp en kaffe til meg'
+  search:
+    placeholder: 'Søk verktøy eller snarveier (f.eks. "json" eller "g: typescript")'
+    noResults: 'Ingen resultater funnet'
+    externalShortcuts: 'Eksterne snarveier'
+    pressEnter: 'Trykk Enter for å søke'
+  tips:
+    categories:
+      search: 'Søk'
+      shortcuts: 'Snarveier'
+      tools: 'Verktøy'
+      general: 'Generelt'
+    play: 'Spill av'
+    pause: 'Pause'
+    previous: 'Forrige tips'
+    next: 'Neste tips'
+    random: 'Tilfeldig tips'
+    close: 'Lukk tips'
   follow:
     title: 'Liker du it-tools?'
     p1: 'Gi oss en stjerne på'

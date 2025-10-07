@@ -1,6 +1,7 @@
 import { type MaybeRef, get, useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import type { Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import _ from 'lodash';
 import type { Tool, ToolCategory, ToolWithCategory } from './tools.types';
 import { toolsWithCategory } from './index';
@@ -9,17 +10,20 @@ export const useToolStore = defineStore('tools', () => {
   const favoriteToolsName = useStorage('favoriteToolsName', []) as Ref<string[]>;
   const { t } = useI18n();
 
-  const tools = computed<ToolWithCategory[]>(() => toolsWithCategory.map((tool) => {
-    const toolI18nKey = tool.path.replace(/\//g, '');
+  const tools = computed<ToolWithCategory[]>(() => toolsWithCategory
+    .filter(tool => tool && tool.name && tool.name.trim()) // Filter out invalid tools at source
+    .map((tool) => {
+      const toolI18nKey = tool.path.replace(/\//g, '');
 
-    return ({
-      ...tool,
-      path: tool.path,
-      name: t(`tools.${toolI18nKey}.title`, tool.name),
-      description: t(`tools.${toolI18nKey}.description`, tool.description),
-      category: t(`tools.categories.${tool.category.toLowerCase()}`, tool.category),
-    });
-  }));
+      return ({
+        ...tool,
+        path: tool.path,
+        name: t(`tools.${toolI18nKey}.title`, tool.name) || tool.name || 'Unknown Tool',
+        description: t(`tools.${toolI18nKey}.description`, tool.description) || tool.description || '',
+        category: t(`tools.categories.${tool.category.toLowerCase()}`, tool.category) || tool.category || 'Other',
+      });
+    })
+  );
 
   const toolsByCategory = computed<ToolCategory[]>(() => {
     return _.chain(tools.value)
