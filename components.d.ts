@@ -153,6 +153,7 @@ declare module '@vue/runtime-core' {
     MenuLayout: typeof import('./src/components/MenuLayout.vue')['default']
     MetaTagGenerator: typeof import('./src/tools/meta-tag-generator/meta-tag-generator.vue')['default']
     MimeTypes: typeof import('./src/tools/mime-types/mime-types.vue')['default']
+    N8nChatWidget: typeof import('./src/components/N8nChatWidget.vue')['default']
     NAlert: typeof import('naive-ui')['NAlert']
     NavbarButtons: typeof import('./src/components/NavbarButtons.vue')['default']
     NButton: typeof import('naive-ui')['NButton']

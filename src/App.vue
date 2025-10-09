@@ -4,6 +4,7 @@ import { NGlobalStyle, NMessageProvider, NNotificationProvider, darkTheme } from
 import { darkThemeOverrides, lightThemeOverrides } from './themes';
 import { layouts } from './layouts';
 import { useStyleStore } from './stores/style.store';
+import N8nChatWidget from './components/N8nChatWidget.vue';
 
 const route = useRoute();
 const layout = computed(() => route?.meta?.layout ?? layouts.base);
@@ -30,6 +31,8 @@ syncRef(
         </component>
       </NNotificationProvider>
     </NMessageProvider>
+    <!-- n8n Chat Widget - Global floating chat button -->
+    <N8nChatWidget />
   </n-config-provider>
 </template>
 
