@@ -56,12 +56,14 @@ import { tool as chmodCalculator } from './chmod-calculator';
 import { tool as chronometer } from './chronometer';
 import { tool as colorConverter } from './color-converter';
 import { tool as crontabGenerator } from './crontab-generator';
+import { tool as currencyConverter } from './currency-converter';
 import { tool as dateTimeConverter } from './date-time-converter';
 import { tool as deviceInformation } from './device-information';
 import { tool as cypher } from './encryption';
 import { tool as etaCalculator } from './eta-calculator';
 import { tool as percentageCalculator } from './percentage-calculator';
 import { tool as gitMemo } from './git-memo';
+import { tool as linuxCommandsMemo } from './linux-commands-memo';
 import { tool as hashText } from './hash-text';
 import { tool as hmacGenerator } from './hmac-generator';
 import { tool as htmlEntities } from './html-entities';
@@ -105,6 +107,7 @@ export const toolsByCategory: ToolCategory[] = [
       base64FileConverter,
       colorConverter,
       caseConverter,
+      currencyConverter,
       textToNatoAlphabet,
       textToBinary,
       textToUnicode,
@@ -150,6 +153,7 @@ export const toolsByCategory: ToolCategory[] = [
     name: 'Development',
     components: [
       gitMemo,
+      linuxCommandsMemo,
       randomPortGenerator,
       crontabGenerator,
       jsonViewer,

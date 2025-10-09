@@ -1,0 +1,195 @@
+# IT Tools - Handy online tools for developers
+
+## About
+IT Tools is a free and open-source collection of handy online tools for developers and people working in IT. The platform provides a comprehensive suite of utilities designed to improve productivity and streamline common development tasks.
+
+## Website Information
+- **URL**: https://tools.khoadue.me
+- **Type**: Web Application / Developer Tools Platform
+- **Technology**: Vue.js 3, TypeScript, Vite
+- **License**: GNU GPLv3
+- **Repository**: https://github.com/CorentinTh/it-tools
+
+## Main Features
+- **Text & Data Conversion**: Base64, JSON, YAML, XML, CSV, TOML converters
+- **Cryptography**: Hash generators, encryption tools, password analyzers
+- **Network Tools**: IP address utilities, subnet calculators, user agent parsers
+- **Development Utilities**: Regex testers, code formatters, diff tools
+- **Generators**: UUID, ULID, QR codes, passwords, tokens
+- **Validators**: IBAN, email, phone number validators
+- **Image & Media**: QR code generators, camera recorder, image converters
+- **System Tools**: MAC address generators, keycode info, benchmark builders
+
+## Tool Categories
+1. **Crypto**: Token generators, hash functions, encryption, password tools
+2. **Converters**: Text, data format, and encoding converters
+3. **Generators**: Various ID, code, and content generators
+4. **Text**: Text manipulation, formatting, and analysis tools
+5. **Network**: IP, DNS, and network-related utilities
+6. **Image**: Image processing and generation tools
+7. **Data**: Data validation, parsing, and transformation tools
+8. **Miscellaneous**: Various utility tools for developers
+
+## Complete Tool List
+
+Total Tools: 89
+
+### Crypto (11 tools)
+- **Token Generator** (/token-generator) - Generate secure random tokens
+- **Hash Text** (/hash-text) - Generate MD5, SHA-1, SHA-256, SHA-512 hashes
+- **Bcrypt** (/bcrypt) - Hash and verify passwords using bcrypt
+- **UUID Generator** (/uuid-generator) - Generate UUIDs (v1, v4, v5)
+- **ULID Generator** (/ulid-generator) - Generate ULIDs (Universally Unique Lexicographically Sortable Identifiers)
+- **Encryption** (/encryption) - Encrypt and decrypt text using various algorithms
+- **BIP39 Generator** (/bip39-generator) - Generate BIP39 mnemonic phrases
+- **HMAC Generator** (/hmac-generator) - Generate HMAC signatures
+- **RSA Key Pair Generator** (/rsa-key-pair-generator) - Generate RSA public/private key pairs
+- **Password Strength Analyzer** (/password-strength-analyser) - Analyze password strength
+- **PDF Signature Checker** (/pdf-signature-checker) - Check PDF digital signatures
+
+### Converter (22 tools)
+- **Date Time Converter** (/date-time-converter) - Convert between different date/time formats
+- **Integer Base Converter** (/integer-base-converter) - Convert numbers between different bases
+- **Roman Numeral Converter** (/roman-numeral-converter) - Convert between Roman and Arabic numerals
+- **Base64 String Converter** (/base64-string-converter) - Encode/decode Base64 strings
+- **Base64 File Converter** (/base64-file-converter) - Encode/decode files to/from Base64
+- **Color Converter** (/color-converter) - Convert between color formats (HEX, RGB, HSL, etc.)
+- **Case Converter** (/case-converter) - Convert text between different cases
+- **Currency Converter** (/currency-converter) - Convert between different currencies
+- **Text to NATO Alphabet** (/text-to-nato-alphabet) - Convert text to NATO phonetic alphabet
+- **Text to Binary** (/text-to-binary) - Convert text to binary representation
+- **Text to Unicode** (/text-to-unicode) - Convert text to Unicode escape sequences
+- **YAML to JSON** (/yaml-to-json-converter) - Convert YAML to JSON format
+- **YAML to TOML** (/yaml-to-toml) - Convert YAML to TOML format
+- **JSON to YAML** (/json-to-yaml-converter) - Convert JSON to YAML format
+- **JSON to TOML** (/json-to-toml) - Convert JSON to TOML format
+- **List Converter** (/list-converter) - Convert between different list formats
+- **TOML to JSON** (/toml-to-json) - Convert TOML to JSON format
+- **TOML to YAML** (/toml-to-yaml) - Convert TOML to YAML format
+- **XML to JSON** (/xml-to-json) - Convert XML to JSON format
+- **JSON to XML** (/json-to-xml) - Convert JSON to XML format
+- **Markdown to HTML** (/markdown-to-html) - Convert Markdown to HTML
+- **HTML to Markdown** (/html-to-markdown) - Convert HTML to Markdown
+
+### Web (16 tools)
+- **URL Encoder** (/url-encoder) - Encode/decode URL components
+- **HTML Entities** (/html-entities) - Encode/decode HTML entities
+- **URL Parser** (/url-parser) - Parse and analyze URLs
+- **Device Information** (/device-information) - Get device and browser information
+- **Basic Auth Generator** (/basic-auth-generator) - Generate HTTP Basic Authentication headers
+- **Meta Tag Generator** (/meta-tag-generator) - Generate HTML meta tags
+- **OTP Code Generator and Validator** (/otp-code-generator-and-validator) - Generate and validate OTP codes
+- **MIME Types** (/mime-types) - Look up MIME types for file extensions
+- **JWT Parser** (/jwt-parser) - Parse and decode JWT tokens
+- **Keycode Info** (/keycode-info) - Get information about keyboard keycodes
+- **Slugify String** (/slugify-string) - Convert strings to URL-friendly slugs
+- **HTML WYSIWYG Editor** (/html-wysiwyg-editor) - Rich text editor for HTML
+- **User Agent Parser** (/user-agent-parser) - Parse and analyze user agent strings
+- **HTTP Status Codes** (/http-status-codes) - Reference for HTTP status codes
+- **JSON Diff** (/json-diff) - Compare and diff JSON objects
+- **Safelink Decoder** (/safelink-decoder) - Decode Microsoft Safe Links
+
+### Images and Videos (4 tools)
+- **QR Code Generator** (/qr-code-generator) - Generate QR codes from text/URLs
+- **WiFi QR Code Generator** (/wifi-qr-code-generator) - Generate QR codes for WiFi networks
+- **SVG Placeholder Generator** (/svg-placeholder-generator) - Generate SVG placeholder images
+- **Camera Recorder** (/camera-recorder) - Record videos using device camera
+
+### Development (16 tools)
+- **Git Memo** (/git-memo) - Quick reference for Git commands
+- **Random Port Generator** (/random-port-generator) - Generate random port numbers
+- **Crontab Generator** (/crontab-generator) - Generate cron expressions
+- **JSON Viewer** (/json-viewer) - Pretty-print and view JSON data
+- **JSON Minify** (/json-minify) - Minify JSON by removing whitespace
+- **JSON to CSV** (/json-to-csv) - Convert JSON data to CSV format
+- **SQL Prettify** (/sql-prettify) - Format and prettify SQL queries
+- **Chmod Calculator** (/chmod-calculator) - Calculate file permissions
+- **Docker Run to Compose Converter** (/docker-run-to-docker-compose-converter) - Convert docker run commands to docker-compose
+- **XML Formatter** (/xml-formatter) - Format and prettify XML
+- **YAML Viewer** (/yaml-viewer) - Pretty-print and view YAML data
+- **Email Normalizer** (/email-normalizer) - Normalize email addresses
+- **Regex Tester** (/regex-tester) - Test regular expressions
+- **Regex Memo** (/regex-memo) - Regular expression reference
+- **AI Playground** (/ai-playground) - Interactive AI/LLM playground
+
+### Network (6 tools)
+- **IPv4 Subnet Calculator** (/ipv4-subnet-calculator) - Calculate IPv4 subnets
+- **IPv4 Address Converter** (/ipv4-address-converter) - Convert IPv4 addresses between formats
+- **IPv4 Range Expander** (/ipv4-range-expander) - Expand IPv4 address ranges
+- **MAC Address Lookup** (/mac-address-lookup) - Look up MAC address vendors
+- **MAC Address Generator** (/mac-address-generator) - Generate random MAC addresses
+- **IPv6 ULA Generator** (/ipv6-ula-generator) - Generate IPv6 Unique Local Addresses
+
+### Math (3 tools)
+- **Math Evaluator** (/math-evaluator) - Evaluate mathematical expressions
+- **ETA Calculator** (/eta-calculator) - Calculate estimated time of arrival
+- **Percentage Calculator** (/percentage-calculator) - Calculate percentages
+
+### Measurement (3 tools)
+- **Chronometer** (/chronometer) - Stopwatch and timer
+- **Temperature Converter** (/temperature-converter) - Convert between temperature units
+- **Benchmark Builder** (/benchmark-builder) - Build and run performance benchmarks
+
+### Text (7 tools)
+- **Lorem Ipsum Generator** (/lorem-ipsum-generator) - Generate Lorem Ipsum text
+- **Text Statistics** (/text-statistics) - Analyze text statistics
+- **Emoji Picker** (/emoji-picker) - Browse and copy emojis
+- **String Obfuscator** (/string-obfuscator) - Obfuscate strings
+- **Text Diff** (/text-diff) - Compare and diff text files
+- **Numeronym Generator** (/numeronym-generator) - Generate numeronyms (e.g., i18n, a11y)
+- **ASCII Text Drawer** (/ascii-text-drawer) - Draw text using ASCII art
+
+### Data (2 tools)
+- **Phone Parser and Formatter** (/phone-parser-and-formatter) - Parse and format phone numbers
+- **IBAN Validator and Parser** (/iban-validator-and-parser) - Validate and parse IBAN codes
+
+## Target Audience
+- Software developers
+- DevOps engineers
+- System administrators
+- IT professionals
+- Students learning programming
+- Anyone working with data formats and development tools
+
+## Usage
+All tools are web-based and require no installation. Simply navigate to the specific tool URL and use the interface to perform your desired operation. Most tools support:
+- Input validation
+- Real-time conversion
+- Copy-to-clipboard functionality
+- Download options for results
+- Responsive design for mobile use
+
+## Privacy & Analytics
+- Uses Google Analytics (GA4) for usage tracking
+- Implements Usercentrics CMP for GDPR-compliant cookie consent
+- Also supports Plausible Analytics as an alternative
+- No user data is stored or transmitted beyond analytics
+
+## Technical Details
+- Built with Vue.js 3 and TypeScript
+- Uses Vite for build tooling
+- Implements PWA capabilities
+- Supports internationalization (i18n)
+- Responsive design with mobile support
+- SEO optimized with sitemap and robots.txt
+
+## Contributing
+The project is open source and welcomes contributions. Users can:
+- Submit feature requests
+- Report bugs
+- Contribute code
+- Suggest new tools
+- Improve documentation
+
+## Self-Hosting
+The application can be self-hosted using:
+- Docker containers
+- Cloudron
+- Tipi
+- Unraid
+- Manual deployment
+
+## Contact & Support
+- GitHub Issues for bug reports and feature requests
+- Open source community support
+- Regular updates and new tool additions

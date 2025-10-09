@@ -1,0 +1,7 @@
+# Serve static files directly
+/robots.txt /robots.txt 200
+/sitemap.xml /sitemap.xml 200
+/llms.txt /llms.txt 200
+
+# Redirect all other requests to index.html for SPA routing
+/* /index.html 200

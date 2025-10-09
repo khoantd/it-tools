@@ -2,7 +2,7 @@ export type ChatRole = 'system' | 'user' | 'assistant' | 'tool';
 
 export interface ChatMessageInput {
   role: ChatRole;
-  content: string;
+  content: string | any[]; // Support both text and multimodal content
   tool_calls?: ToolCall[];
   tool_call_id?: string;
 }

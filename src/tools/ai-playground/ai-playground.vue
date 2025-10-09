@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useStorage } from '@vueuse/core';
-import { NInput, NSelect, NInputNumber, NButton, NForm, NFormItem, NSwitch } from 'naive-ui';
-import { IconChevronDown, IconChevronUp, IconSettings, IconApi, IconHistory, IconX, IconMenu2, IconMessageShare } from '@tabler/icons-vue';
+import { NInput, NSelect, NInputNumber, NButton, NForm, NFormItem, NSwitch, NCard, NDivider } from 'naive-ui';
+import { IconChevronDown, IconChevronUp, IconSettings, IconApi, IconHistory, IconX, IconMenu2, IconMessageShare, IconHelp } from '@tabler/icons-vue';
 import { marked } from 'marked';
 import { makeClient, type ProviderConfig, type ToolDefinition } from './services/llm.client';
 import { usePresetStore } from './services/presets.store';
+import CModal from '@/ui/c-modal/c-modal.vue';
 
 type ChatRole = 'system' | 'user' | 'assistant' | 'tool'; // 'tool' is used internally but converted to 'assistant' for API
 interface ChatMessage { 
   id: string; 
   role: ChatRole; 
-  content: string;
+  content: string | any[]; // Support both text and multimodal content
   tool_calls?: any[];
   tool_call_id?: string;
 }
@@ -74,6 +75,10 @@ function onGutterDoubleClick() {
 
 // Tool integration state
 const isProcessingToolCall = ref(false);
+
+// Help modal state
+const showHelpModal = ref(false);
+const hasSeenHelp = useStorage('ai:has-seen-help', false);
 
 function add(role: ChatRole, content: string) {
   messages.value.push({ id: crypto.randomUUID(), role, content });
@@ -149,8 +154,37 @@ async function send() {
   if (messages.value.length === 0 && systemPrompt.value) {
     add('system', systemPrompt.value);
   }
-  add('user', text);
+  
+  // Process attachments and create multimodal content
+  const processedAttachments = await processAttachments();
+  
+  // Create message content - either text only or multimodal
+  let messageContent: string | any[];
+  if (processedAttachments.length > 0) {
+    // Create multimodal content array
+    messageContent = [
+      {
+        type: 'text',
+        text: text
+      },
+      ...processedAttachments
+    ];
+    console.log('Created multimodal message with attachments:', processedAttachments.length);
+  } else {
+    // Text only
+    messageContent = text;
+  }
+  
+  // Add user message with processed content
+  messages.value.push({ 
+    id: crypto.randomUUID(), 
+    role: 'user', 
+    content: messageContent as any
+  });
+  
+  // Clear input and attachments after sending
   input.value = '';
+  attachments.value = [];
   
   await processConversation();
 }
@@ -177,7 +211,7 @@ async function continueConversation(assistantId: string) {
         };
       }
       
-      // For other messages, use as-is
+      // For other messages, handle both text and multimodal content
       const message: any = { 
         role: m.role,
         content: m.content 
@@ -201,10 +235,20 @@ async function continueConversation(assistantId: string) {
         return false;
       }
       
-      // Ensure content is a string
-      if (typeof msg.content !== 'string') {
-        console.warn('Message content is not a string:', msg);
+      // Allow both string content and multimodal content arrays
+      if (typeof msg.content !== 'string' && !Array.isArray(msg.content)) {
+        console.warn('Message content is neither string nor array:', msg);
         return false;
+      }
+      
+      // If content is an array (multimodal), validate its structure
+      if (Array.isArray(msg.content)) {
+        for (const item of msg.content) {
+          if (!item.type || (item.type !== 'text' && item.type !== 'image_url')) {
+            console.warn('Invalid multimodal content item:', item);
+            return false;
+          }
+        }
       }
       
       return true;
@@ -331,12 +375,101 @@ async function importPresets(ev: Event) {
 function renderMarkdown(text: string) {
   try { return marked.parse(text); } catch { return text; }
 }
-async function copy(text: string) {
-  try { await navigator.clipboard.writeText(text); } catch {}
+async function copy(content: string | any[]) {
+  try { 
+    let textToCopy: string;
+    if (Array.isArray(content)) {
+      // Extract text from multimodal content
+      textToCopy = content
+        .filter(item => item.type === 'text')
+        .map(item => item.text)
+        .join('\n');
+    } else {
+      textToCopy = content;
+    }
+    await navigator.clipboard.writeText(textToCopy); 
+  } catch {}
 }
 
 // attachments and slash commands
 const attachments = ref<File[]>([]);
+
+// Image processing utilities
+async function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Remove data URL prefix (e.g., "data:image/png;base64,")
+      const base64 = result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function getMimeType(file: File): string {
+  return file.type || 'application/octet-stream';
+}
+
+function isImageFile(file: File): boolean {
+  return file.type.startsWith('image/');
+}
+
+function isTextFile(file: File): boolean {
+  return file.type.startsWith('text/') || file.type === 'application/json';
+}
+
+async function processAttachments(): Promise<any[]> {
+  if (!attachments.value.length) return [];
+  
+  const processedAttachments: any[] = [];
+  
+  for (const file of attachments.value) {
+    if (isImageFile(file)) {
+      try {
+        const base64 = await fileToBase64(file);
+        processedAttachments.push({
+          type: 'image_url',
+          image_url: {
+            url: `data:${getMimeType(file)};base64,${base64}`,
+            detail: 'auto'
+          }
+        });
+      } catch (error) {
+        console.error('Failed to process image:', file.name, error);
+        // Add as text fallback
+        processedAttachments.push({
+          type: 'text',
+          text: `[Image: ${file.name} - Failed to process]`
+        });
+      }
+    } else if (isTextFile(file)) {
+      try {
+        const text = await file.text();
+        processedAttachments.push({
+          type: 'text',
+          text: `[File: ${file.name}]\n${text}`
+        });
+      } catch (error) {
+        console.error('Failed to read text file:', file.name, error);
+        processedAttachments.push({
+          type: 'text',
+          text: `[File: ${file.name} - Failed to read]`
+        });
+      }
+    } else {
+      // Unsupported file type
+      processedAttachments.push({
+        type: 'text',
+        text: `[File: ${file.name} - Unsupported file type: ${file.type}]`
+      });
+    }
+  }
+  
+  return processedAttachments;
+}
 
 // Provider defaults and dynamic placeholders
 const providerDefaults: Record<'openai' | 'anthropic' | 'litellm', { baseUrl: string; model: string }> = {
@@ -392,6 +525,16 @@ function onMessagesClick(ev: MouseEvent) {
 onMounted(() => { messagesEl.value?.addEventListener('click', onMessagesClick); });
 onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessagesClick); });
 
+// Help modal functions
+function openHelp() {
+  showHelpModal.value = true;
+}
+
+function closeHelp() {
+  showHelpModal.value = false;
+  hasSeenHelp.value = true;
+}
+
 </script>
 
 <template>
@@ -419,12 +562,34 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
                 <pre>{{ m.content }}</pre>
               </div>
               <div v-else class="content">
-                <div v-if="m.role !== 'assistant'" v-text="m.content"></div>
-                <div v-else v-html="renderMarkdown(m.content)"></div>
+                <div v-if="m.role !== 'assistant'">
+                  <!-- Handle multimodal content for user messages -->
+                  <div v-if="Array.isArray(m.content)">
+                    <div v-for="(item, idx) in m.content" :key="idx" class="multimodal-item">
+                      <div v-if="item.type === 'text'" v-text="item.text"></div>
+                      <div v-else-if="item.type === 'image_url'" class="image-content">
+                        <img :src="item.image_url.url" :alt="'Attached image'" class="attached-image" />
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else v-text="m.content"></div>
+                </div>
+                <div v-else>
+                  <!-- Handle multimodal content for assistant messages -->
+                  <div v-if="Array.isArray(m.content)">
+                    <div v-for="(item, idx) in m.content" :key="idx" class="multimodal-item">
+                      <div v-if="item.type === 'text'" v-html="renderMarkdown(item.text)"></div>
+                      <div v-else-if="item.type === 'image_url'" class="image-content">
+                        <img :src="item.image_url.url" :alt="'Attached image'" class="attached-image" />
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else v-html="renderMarkdown(m.content)"></div>
+                </div>
               </div>
               <div v-if="m.content && m.role !== 'tool'" class="msg-actions">
                 <NButton size="tiny" quaternary @click="copy(m.content)">Copy</NButton>
-                <NButton size="tiny" quaternary @click="input = (input || '') + `\n> ${m.content}\n`">Quote</NButton>
+                <NButton size="tiny" quaternary @click="input = (input || '') + `\n> ${Array.isArray(m.content) ? m.content.filter(item => item.type === 'text').map(item => item.text).join('\n') : m.content}\n`">Quote</NButton>
               </div>
             </div>
           </div>
@@ -460,20 +625,23 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
           <div class="settings-tabs right">
             <button 
               class="tab-button" 
-              :class="{ active: activeSettingsTab === 'chat' }"
-              @click="activeSettingsTab = 'chat'"
-            >
-              <n-icon size="16"><IconMessageShare /></n-icon>
-              Context
-            </button>
-            <button 
-              class="tab-button" 
               :class="{ active: activeSettingsTab === 'llm' }"
               @click="activeSettingsTab = 'llm'"
             >
               <n-icon size="16"><IconApi /></n-icon>
               LLM
             </button>
+
+
+            <button 
+              class="tab-button" 
+              :class="{ active: activeSettingsTab === 'chat' }"
+              @click="activeSettingsTab = 'chat'"
+            >
+              <n-icon size="16"><IconMessageShare /></n-icon>
+              Context
+            </button>
+            
             <button 
               class="tab-button" 
               :class="{ active: activeSettingsTab === 'history' }"
@@ -481,6 +649,16 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
             >
               <n-icon size="16"><IconHistory /></n-icon>
               History
+            </button>
+            
+            <!-- Help Button -->
+            <button 
+              class="tab-button help-button" 
+              @click="openHelp"
+              title="User Guide"
+            >
+              <n-icon size="16"><IconHelp /></n-icon>
+              Help
             </button>
           </div>
           <div class="tab-content">
@@ -585,8 +763,30 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
               
               <!-- Regular content -->
               <div v-else class="content">
-                <div v-if="m.role !== 'assistant'" v-text="m.content"></div>
-                <div v-else v-html="renderMarkdown(m.content)"></div>
+                <div v-if="m.role !== 'assistant'">
+                  <!-- Handle multimodal content for user messages -->
+                  <div v-if="Array.isArray(m.content)">
+                    <div v-for="(item, idx) in m.content" :key="idx" class="multimodal-item">
+                      <div v-if="item.type === 'text'" v-text="item.text"></div>
+                      <div v-else-if="item.type === 'image_url'" class="image-content">
+                        <img :src="item.image_url.url" :alt="'Attached image'" class="attached-image" />
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else v-text="m.content"></div>
+                </div>
+                <div v-else>
+                  <!-- Handle multimodal content for assistant messages -->
+                  <div v-if="Array.isArray(m.content)">
+                    <div v-for="(item, idx) in m.content" :key="idx" class="multimodal-item">
+                      <div v-if="item.type === 'text'" v-html="renderMarkdown(item.text)"></div>
+                      <div v-else-if="item.type === 'image_url'" class="image-content">
+                        <img :src="item.image_url.url" :alt="'Attached image'" class="attached-image" />
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else v-html="renderMarkdown(m.content)"></div>
+                </div>
               </div>
               
               <div v-if="m.role === 'assistant' && m.content && !m.tool_calls" class="msg-actions">
@@ -664,6 +864,16 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
                 <n-icon size="16"><IconHistory /></n-icon>
                 History
               </button>
+              
+              <!-- Help Button -->
+              <button 
+                class="tab-button help-button" 
+                @click="openHelp"
+                title="User Guide"
+              >
+                <n-icon size="16"><IconHelp /></n-icon>
+                Help
+              </button>
             </div>
 
             <!-- Tab Content -->
@@ -677,7 +887,7 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
                     <div class="messages" ref="messagesEl">
                       <div v-for="m in messages" :key="m.id" class="msg" :class="m.role">
                         <div class="role">{{ m.role }}</div>
-                        <div v-html="renderMarkdown(m.content)"></div>
+                        <div v-html="renderMarkdown(Array.isArray(m.content) ? m.content.filter(item => item.type === 'text').map(item => item.text).join('\n') : m.content)"></div>
                         <div class="msg-actions">
                           <button class="copy-code-btn">Copy code</button>
                         </div>
@@ -790,6 +1000,170 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
       <!-- </div> -->
       </div>
     <!-- </c-card> -->
+
+    <!-- Help Modal -->
+    <c-modal v-model:open="showHelpModal" :centered="true">
+      <div class="help-modal">
+        <div class="help-header">
+          <h2>AI Playground User Guide</h2>
+          <n-button quaternary circle @click="closeHelp">
+            <template #icon>
+              <n-icon><IconX /></n-icon>
+            </template>
+          </n-button>
+        </div>
+        
+        <div class="help-content">
+          <!-- Getting Started -->
+          <n-card class="help-section">
+            <template #header>
+              <h3>🚀 Getting Started</h3>
+            </template>
+            <div class="help-text">
+              <p><strong>1. Configure your API key:</strong></p>
+              <ul>
+                <li>Click the <strong>Settings</strong> button (⚙️) to open the settings panel</li>
+                <li>Enter your API key in the "API Key" field</li>
+                <li>Choose your provider: <strong>OpenAI</strong> or <strong>Anthropic</strong></li>
+                <li>Select your preferred model (e.g., GPT-3.5-turbo, GPT-4, Claude-3)</li>
+              </ul>
+              
+              <p><strong>2. Start chatting:</strong></p>
+              <ul>
+                <li>Type your message in the input area at the bottom</li>
+                <li>Press <kbd>Cmd+Enter</kbd> (Mac) or <kbd>Ctrl+Enter</kbd> (Windows/Linux) to send</li>
+                <li>Or click the <strong>Send</strong> button</li>
+              </ul>
+            </div>
+          </n-card>
+
+          <!-- Basic Usage -->
+          <n-card class="help-section">
+            <template #header>
+              <h3>💬 Basic Usage</h3>
+            </template>
+            <div class="help-text">
+              <p><strong>Keyboard Shortcuts:</strong></p>
+              <ul>
+                <li><kbd>Cmd+Enter</kbd> / <kbd>Ctrl+Enter</kbd> - Send message</li>
+                <li><kbd>Escape</kbd> - Stop current generation</li>
+              </ul>
+              
+              <p><strong>Message Actions:</strong></p>
+              <ul>
+                <li><strong>Copy</strong> - Copy message content to clipboard</li>
+                <li><strong>Quote</strong> - Quote message in your next input</li>
+              </ul>
+            </div>
+          </n-card>
+
+          <!-- Settings -->
+          <n-card class="help-section">
+            <template #header>
+              <h3>⚙️ Settings Explained</h3>
+            </template>
+            <div class="help-text">
+              <p><strong>Provider Types:</strong></p>
+              <ul>
+                <li><strong>OpenAI</strong> - Use OpenAI's API (GPT models)</li>
+                <li><strong>Anthropic</strong> - Use Anthropic's API (Claude models)</li>
+              </ul>
+              
+              <p><strong>Model Selection:</strong></p>
+              <ul>
+                <li>Choose based on your needs: faster (GPT-3.5) vs more capable (GPT-4)</li>
+                <li>Different models have different pricing and capabilities</li>
+              </ul>
+              
+              <p><strong>Temperature:</strong></p>
+              <ul>
+                <li><strong>0.0</strong> - More deterministic, consistent responses</li>
+                <li><strong>1.0</strong> - More creative, varied responses</li>
+                <li><strong>0.7</strong> - Good balance (default)</li>
+              </ul>
+              
+              <p><strong>System Prompt:</strong></p>
+              <ul>
+                <li>Define the AI's behavior and personality</li>
+                <li>Examples: "You are a helpful coding assistant" or "You are a creative writer"</li>
+              </ul>
+            </div>
+          </n-card>
+
+          <!-- Features -->
+          <n-card class="help-section">
+            <template #header>
+              <h3>✨ Features</h3>
+            </template>
+            <div class="help-text">
+              <p><strong>File Attachments:</strong></p>
+              <ul>
+                <li>Click <strong>"Attach files"</strong> to upload images or text files</li>
+                <li>Supported: Images (PNG, JPG, GIF) and text files</li>
+                <li>AI can analyze and discuss the content of your files</li>
+              </ul>
+              
+              <p><strong>Layout Modes:</strong></p>
+              <ul>
+                <li><strong>Split View</strong> - Chat and settings side by side</li>
+                <li><strong>Compact View</strong> - Tabbed interface for smaller screens</li>
+                <li>Drag the divider to resize panels in split view</li>
+              </ul>
+              
+              <p><strong>Message Management:</strong></p>
+              <ul>
+                <li><strong>Clear Chat</strong> - Start fresh conversation</li>
+                <li><strong>Export Logs</strong> - Download conversation logs as JSON</li>
+              </ul>
+            </div>
+          </n-card>
+
+          <!-- Advanced -->
+          <n-card class="help-section">
+            <template #header>
+              <h3>🔧 Advanced Features</h3>
+            </template>
+            <div class="help-text">
+              <p><strong>Request/Response Logs:</strong></p>
+              <ul>
+                <li>View detailed logs of API requests and responses</li>
+                <li>Helpful for debugging and understanding AI behavior</li>
+                <li>Toggle logs panel in the settings area</li>
+              </ul>
+              
+              <p><strong>Custom Base URLs:</strong></p>
+              <ul>
+                <li>Use with proxy services or self-hosted models</li>
+                <li>Modify the "Provider Base URL" in settings</li>
+              </ul>
+            </div>
+          </n-card>
+
+          <!-- Tips -->
+          <n-card class="help-section">
+            <template #header>
+              <h3>💡 Tips & Best Practices</h3>
+            </template>
+            <div class="help-text">
+              <p><strong>For Better Results:</strong></p>
+              <ul>
+                <li>Be specific in your requests</li>
+                <li>Provide context when asking questions</li>
+                <li>Use the system prompt to set the AI's role</li>
+                <li>Try different temperature settings for different tasks</li>
+              </ul>
+              
+              <p><strong>Cost Optimization:</strong></p>
+              <ul>
+                <li>Use GPT-3.5 for simple tasks, GPT-4 for complex ones</li>
+                <li>Lower temperature for factual queries, higher for creative tasks</li>
+                <li>Clear chat regularly to avoid long context windows</li>
+              </ul>
+            </div>
+          </n-card>
+        </div>
+      </div>
+    </c-modal>
   </div>
 </template>
 
@@ -984,6 +1358,157 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   margin: 0;
 }
 
+/* Multimodal content styles */
+.multimodal-item {
+  margin-bottom: 8px;
+}
+
+.multimodal-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Help Modal Styles */
+.help-modal {
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.help-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.help-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.help-section {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.help-section h3 {
+  margin: 0;
+  color: #374151;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.help-text {
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.help-text p {
+  margin: 0 0 12px 0;
+}
+
+.help-text ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.help-text li {
+  margin: 4px 0;
+}
+
+.help-text strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.help-text kbd {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+  color: #374151;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Help Button Styles */
+.help-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.help-button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.help-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+}
+
+/* Dark mode support for help modal */
+@media (prefers-color-scheme: dark) {
+  .help-header h2 {
+    color: #f9fafb;
+  }
+  
+  .help-section h3 {
+    color: #e5e7eb;
+  }
+  
+  .help-text {
+    color: #d1d5db;
+  }
+  
+  .help-text strong {
+    color: #f9fafb;
+  }
+  
+  .help-text kbd {
+    background: #374151;
+    border-color: #4b5563;
+    color: #e5e7eb;
+  }
+  
+  .help-header {
+    border-bottom-color: #374151;
+  }
+  
+  .help-section {
+    border-color: #374151;
+  }
+}
+
+.image-content {
+  margin: 8px 0;
+}
+
+.attached-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+  background: #f9fafb;
+}
+
 .composer { 
   margin-top: 16px; 
   display: grid; 
@@ -1007,7 +1532,7 @@ onBeforeUnmount(() => { messagesEl.value?.removeEventListener('click', onMessage
   gap: 12px; 
   justify-content: flex-end;
 }
-.composer .actions .btn-space { margin-left: 8px; }
+.composer .actions .btn-space { margin-left: 16px; }
 
 .attachments { 
   display: flex; 

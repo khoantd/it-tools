@@ -194,6 +194,9 @@ importers:
       vue:
         specifier: ^3.3.4
         version: 3.3.4
+      vue-gtag:
+        specifier: ^3.6.1
+        version: 3.6.1(vue-router@4.1.6(vue@3.3.4))(vue@3.3.4)
       vue-i18n:
         specifier: ^9.9.1
         version: 9.9.1(vue@3.3.4)
@@ -209,6 +212,9 @@ importers:
       vuedraggable:
         specifier: ^4.1.0
         version: 4.1.0(vue@3.3.4)
+      written-number:
+        specifier: ^0.11.1
+        version: 0.11.1
       xml-formatter:
         specifier: ^3.3.2
         version: 3.3.2
@@ -5714,6 +5720,15 @@ packages:
     peerDependencies:
       vue: ^3.4.37
 
+  vue-gtag@3.6.1:
+    resolution: {integrity: sha512-gsEt3vconVtZlYJTel9B/qVjdmW87XMl2KDrz0ds1sGSHjzqZ1c6KXl4M/Qjiem57FixQR8RDTDDX7MTKa3rFw==}
+    peerDependencies:
+      vue: ^3.5.13
+      vue-router: ^4.5.0
+    peerDependenciesMeta:
+      vue-router:
+        optional: true
+
   vue-i18n@9.9.1:
     resolution: {integrity: sha512-xyQ4VspLdNSPTKBFBPWa1tvtj+9HuockZwgFeD2OhxxXuC2CWeNvV4seu2o9+vbQOyQbhAM5Ez56oxUrrnTWdw==}
     engines: {node: '>= 16'}
@@ -5895,6 +5910,9 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  written-number@0.11.1:
+    resolution: {integrity: sha512-LhQ68uUnzHH0bwm/QiGA9JwqgadSDOwqB2AIs/LBsrOY6ScqVXKRN2slTCeKAhstDBJ/Of/Yxcjn0pnQmVlmtg==}
 
   ws@8.13.0:
     resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}
@@ -12167,6 +12185,12 @@ snapshots:
     dependencies:
       vue: 3.3.4
 
+  vue-gtag@3.6.1(vue-router@4.1.6(vue@3.3.4))(vue@3.3.4):
+    dependencies:
+      vue: 3.3.4
+    optionalDependencies:
+      vue-router: 4.1.6(vue@3.3.4)
+
   vue-i18n@9.9.1(vue@3.3.4):
     dependencies:
       '@intlify/core-base': 9.9.1
@@ -12443,6 +12467,8 @@ snapshots:
       strip-ansi: 6.0.1
 
   wrappy@1.0.2: {}
+
+  written-number@0.11.1: {}
 
   ws@8.13.0: {}
 

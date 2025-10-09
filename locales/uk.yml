@@ -91,3 +91,106 @@ tools:
   html-to-markdown:
     title: HTML в Markdown
     description: Конвертувати HTML контент у формат Markdown з налаштовуваними опціями та валідацією
+
+  currency-converter:
+    title: Конвертер валют
+    description: Конвертувати між валютами, використовуючи курси валют у реальному часі. Підтримує 30+ основних валют з даними у реальному часі.
+    how-it-works:
+      title: Як це працює
+      description: Введіть суму в будь-якій валюті, щоб побачити еквівалент у всіх інших валютах. Курси оновлюються з даних курсів валют у реальному часі та кешуються на 1 годину.
+
+  xml-to-json:
+    title: XML в JSON
+    description: Конвертувати вміст XML у формат JSON
+
+  json-to-xml:
+    title: JSON в XML
+    description: Конвертувати вміст JSON у формат XML
+
+  markdown-to-html:
+    title: Markdown в HTML
+    description: Конвертувати вміст Markdown у HTML
+
+  safelink-decoder:
+    title: Декодер Safelink
+    description: Декодувати URL, захищені обгортками safelink
+
+  email-normalizer:
+    title: Нормалізатор email
+    description: Нормалізувати email, видаляючи крапки, теги та поширені варіанти
+
+  regex-tester:
+    title: Тестер Regex
+    description: Тестувати, налагоджувати та візуалізувати регулярні вирази
+
+  regex-memo:
+    title: Мемо Regex
+    description: Зберігати та організовувати ваші улюблені регулярні вирази
+
+  linux-commands-memo:
+    title: Шпаргалка команд Linux
+    description: Всеосяжний довідник з основних команд Linux, що охоплює файлові операції, системне адміністрування, мережу та інше.
+
+currencies:
+  USD:
+    name: Долар США
+  VND:
+    name: В'єтнамський донг
+  EUR:
+    name: Євро
+  GBP:
+    name: Британський фунт
+  JPY:
+    name: Японська єна
+  CNY:
+    name: Китайський юань
+  CAD:
+    name: Канадський долар
+  AUD:
+    name: Австралійський долар
+  CHF:
+    name: Швейцарський франк
+  INR:
+    name: Індійська рупія
+  RUB:
+    name: Російський рубль
+  BRL:
+    name: Бразильський реал
+  MXN:
+    name: Мексиканський песо
+  ZAR:
+    name: Південноафриканський ранд
+  SGD:
+    name: Сінгапурський долар
+  HKD:
+    name: Гонконгський долар
+  NOK:
+    name: Норвезька крона
+  SEK:
+    name: Шведська крона
+  DKK:
+    name: Данська крона
+  NZD:
+    name: Новозеландський долар
+  KRW:
+    name: Південнокорейський вон
+  TRY:
+    name: Турецька ліра
+  PLN:
+    name: Польський злотий
+  CZK:
+    name: Чеська крона
+  HUF:
+    name: Угорський форинт
+  ILS:
+    name: Ізраїльський шекель
+  AED:
+    name: Дірхам ОАЕ
+  SAR:
+    name: Саудівський ріал
+  THB:
+    name: Тайський бат
+  MYR:
+    name: Малайзійський ринггіт
+  PHP:
+    name: Філіппінський песо

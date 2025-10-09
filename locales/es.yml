@@ -132,3 +132,107 @@ tools:
         completed: Completado
         failed: Fallido
         pending: Pendiente
+
+  currency-converter:
+    title: Convertidor de monedas
+    description: Convierte entre monedas usando tipos de cambio en tiempo real. Soporta 30+ monedas principales con datos en tiempo real.
+    how-it-works:
+      title: Cómo funciona
+      description: Ingresa una cantidad en cualquier moneda para ver el equivalente en todas las demás monedas. Las tasas se actualizan desde datos de tipos de cambio en vivo y se almacenan en caché durante 1 hora.
+
+  xml-to-json:
+    title: XML a JSON
+    description: Convertir contenido XML a formato JSON
+
+  json-to-xml:
+    title: JSON a XML
+    description: Convertir contenido JSON a formato XML
+
+  markdown-to-html:
+    title: Markdown a HTML
+    description: Convertir contenido Markdown a HTML
+
+  safelink-decoder:
+    title: Decodificador Safelink
+    description: Decodificar URLs protegidas por wrappers safelink
+
+  email-normalizer:
+    title: Normalizador de email
+    description: Normalizar emails eliminando puntos, etiquetas y variantes comunes
+
+  regex-tester:
+    title: Probador de Regex
+    description: Probar, depurar y visualizar expresiones regulares
+
+  regex-memo:
+    title: Memo de Regex
+    description: Guardar y organizar tus expresiones regulares favoritas
+
+  linux-commands-memo:
+    title: Hoja de referencia de comandos Linux
+    description: Referencia completa para comandos esenciales de Linux que cubren operaciones de archivos, administración del sistema, redes y más.
+
+currencies:
+  USD:
+    name: Dólar estadounidense
+  VND:
+    name: Dong vietnamita
+  EUR:
+    name: Euro
+  GBP:
+    name: Libra esterlina
+  JPY:
+    name: Yen japonés
+  CNY:
+    name: Yuan chino
+  CAD:
+    name: Dólar canadiense
+  AUD:
+    name: Dólar australiano
+  CHF:
+    name: Franco suizo
+  INR:
+    name: Rupia india
+  RUB:
+    name: Rublo ruso
+  BRL:
+    name: Real brasileño
+  MXN:
+    name: Peso mexicano
+  ZAR:
+    name: Rand sudafricano
+  SGD:
+    name: Dólar de Singapur
+  HKD:
+    name: Dólar de Hong Kong
+  NOK:
+    name: Corona noruega
+  SEK:
+    name: Corona sueca
+  DKK:
+    name: Corona danesa
+  NZD:
+    name: Dólar neozelandés
+  KRW:
+    name: Won surcoreano
+  TRY:
+    name: Lira turca
+  PLN:
+    name: Zloty polaco
+  CZK:
+    name: Corona checa
+  HUF:
+    name: Forint húngaro
+  ILS:
+    name: Shekel israelí
+  AED:
+    name: Dirham de los EAU
+  SAR:
+    name: Riyal saudí
+  THB:
+    name: Baht tailandés
+
+  MYR:
+    name: Ringgit malayo
+  PHP:
+    name: Peso filipino

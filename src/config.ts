@@ -53,6 +53,39 @@ export const config = figue({
       default: false,
     },
   },
+  gtag: {
+    isTrackerEnabled: {
+      doc: 'Is Google Analytics tracker enabled',
+      format: 'boolean',
+      default: false,
+      env: 'VITE_GTAG_ENABLED',
+    },
+    measurementId: {
+      doc: 'Google Analytics measurement ID',
+      format: 'string',
+      default: '',
+      env: 'VITE_GTAG_MEASUREMENT_ID',
+    },
+    trackLocalhost: {
+      doc: 'Enable or disable localhost tracking by Google Analytics',
+      format: 'boolean',
+      default: false,
+    },
+  },
+  usercentrics: {
+    isEnabled: {
+      doc: 'Is Usercentrics CMP enabled',
+      format: 'boolean',
+      default: true,
+      env: 'VITE_USERCENTRICS_ENABLED',
+    },
+    settingsId: {
+      doc: 'Usercentrics settings ID',
+      format: 'string',
+      default: 'ed_jz6KAMS3U2X',
+      env: 'VITE_USERCENTRICS_SETTINGS_ID',
+    },
+  },
   showBanner: {
     doc: 'Show the banner',
     format: 'boolean',

@@ -145,7 +145,8 @@ function onUpdateFavoriteTools() {
 </script>
 
 <template>
-  <div class="home-search-container">
+  <div style="margin-top: 10px;">
+    <div class="home-search-container">
     <div class="search-hero">
       <div class="search-wrapper" ref="searchContainerRef">
         <div class="search-input-container">
@@ -202,6 +203,8 @@ function onUpdateFavoriteTools() {
       </div> -->
     </div>
   </div>
+  </div>
+  
 </template>
 
 <style scoped lang="less">

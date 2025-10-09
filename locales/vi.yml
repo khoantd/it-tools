@@ -173,6 +173,10 @@ tools:
     title: Lệnh Git
     description: Git là một phần mềm quản lý phiên bản phân tán. Với bảng ghi chú này, bạn sẽ có thể truy cập nhanh vào các lệnh Git phổ biến nhất.
 
+  linux-commands-memo:
+    title: Bảng ghi chú lệnh Linux
+    description: Tham khảo toàn diện cho các lệnh Linux thiết yếu bao gồm thao tác tệp, quản trị hệ thống, mạng và nhiều hơn nữa.
+
   slugify-string:
     title: Chuyển đổi chuỗi thành slug
     description: Biến đổi chuỗi thành dạng an toàn để sử dụng trong URL, tên file và ID.
@@ -469,3 +473,321 @@ tools:
   ascii-text-drawer:
     title: Vẽ chữ ASCII
     description: Tạo biểu ngữ nghệ thuật ASCII từ văn bản
+
+  currency-converter:
+    title: Bộ chuyển đổi tiền tệ
+    description: Chuyển đổi giữa các loại tiền tệ sử dụng tỷ giá hối đoái trực tiếp. Hỗ trợ hơn 30 loại tiền tệ chính với dữ liệu thời gian thực.
+    copy-success: 'Đã sao chép "{text}" vào clipboard'
+    how-it-works:
+      title: Cách hoạt động
+      description: Nhập một số tiền bằng bất kỳ loại tiền tệ nào để xem giá trị tương đương trong tất cả các loại tiền tệ khác. Tỷ giá được cập nhật từ dữ liệu tỷ giá hối đoái trực tiếp và được lưu trữ trong 1 giờ.
+
+  xml-to-json:
+    title: XML sang JSON
+    description: Chuyển đổi nội dung XML sang định dạng JSON
+
+  json-to-xml:
+    title: JSON sang XML
+    description: Chuyển đổi nội dung JSON sang định dạng XML
+
+  markdown-to-html:
+    title: Markdown sang HTML
+    description: Chuyển đổi nội dung Markdown sang HTML
+
+  safelink-decoder:
+    title: Giải mã Safelink
+    description: Giải mã các URL được bảo vệ bởi trình bao bọc safelink
+
+  email-normalizer:
+    title: Chuẩn hóa Email
+    description: Chuẩn hóa email bằng cách loại bỏ dấu chấm, thẻ và các biến thể phổ biến
+
+  regex-tester:
+    title: Kiểm tra Regex
+    description: Kiểm tra, gỡ lỗi và trực quan hóa các biểu thức chính quy
+
+  regex-memo:
+    title: Ghi nhớ Regex
+    description: Lưu và tổ chức các biểu thức chính quy yêu thích của bạn
+
+currencies:
+  connector: và
+  USD:
+    name: Đô la Mỹ
+    unit:
+      major:
+        singular: đô la
+        plural: đô la
+      minor:
+        singular: xu
+        plural: xu
+  VND:
+    name: Đồng Việt Nam
+    unit:
+      major:
+        singular: đồng
+        plural: đồng
+      minor:
+        singular: xu
+        plural: xu
+  EUR:
+    name: Euro
+    unit:
+      major:
+        singular: euro
+        plural: euro
+      minor:
+        singular: xu
+        plural: xu
+  GBP:
+    name: Bảng Anh
+    unit:
+      major:
+        singular: bảng
+        plural: bảng
+      minor:
+        singular: penny
+        plural: pence
+  JPY:
+    name: Yên Nhật
+    unit:
+      major:
+        singular: yên
+        plural: yên
+      minor:
+        singular: sen
+        plural: sen
+  CNY:
+    name: Nhân dân tệ Trung Quốc
+    unit:
+      major:
+        singular: nhân dân tệ
+        plural: nhân dân tệ
+      minor:
+        singular: fen
+        plural: fen
+  CAD:
+    name: Đô la Canada
+    unit:
+      major:
+        singular: đô la
+        plural: đô la
+      minor:
+        singular: xu
+        plural: xu
+  AUD:
+    name: Đô la Úc
+    unit:
+      major:
+        singular: đô la
+        plural: đô la
+      minor:
+        singular: xu
+        plural: xu
+  CHF:
+    name: Franc Thụy Sĩ
+    unit:
+      major:
+        singular: franc
+        plural: franc
+      minor:
+        singular: centime
+        plural: centime
+  INR:
+    name: Rupee Ấn Độ
+    unit:
+      major:
+        singular: rupee
+        plural: rupee
+      minor:
+        singular: paisa
+        plural: paise
+  RUB:
+    name: Rúp Nga
+    unit:
+      major:
+        singular: rúp
+        plural: rúp
+      minor:
+        singular: kopeck
+        plural: kopeck
+  BRL:
+    name: Real Brazil
+    unit:
+      major:
+        singular: real
+        plural: real
+      minor:
+        singular: centavo
+        plural: centavo
+  MXN:
+    name: Peso Mexico
+    unit:
+      major:
+        singular: peso
+        plural: peso
+      minor:
+        singular: centavo
+        plural: centavo
+  ZAR:
+    name: Rand Nam Phi
+    unit:
+      major:
+        singular: rand
+        plural: rand
+      minor:
+        singular: xu
+        plural: xu
+  SGD:
+    name: Đô la Singapore
+    unit:
+      major:
+        singular: đô la
+        plural: đô la
+      minor:
+        singular: xu
+        plural: xu
+  HKD:
+    name: Đô la Hồng Kông
+    unit:
+      major:
+        singular: đô la
+        plural: đô la
+      minor:
+        singular: xu
+        plural: xu
+  NOK:
+    name: Krone Na Uy
+    unit:
+      major:
+        singular: krone
+        plural: krone
+      minor:
+        singular: øre
+        plural: øre
+  SEK:
+    name: Krona Thụy Điển
+    unit:
+      major:
+        singular: krona
+        plural: krona
+      minor:
+        singular: öre
+        plural: öre
+  DKK:
+    name: Krone Đan Mạch
+    unit:
+      major:
+        singular: krone
+        plural: krone
+      minor:
+        singular: øre
+        plural: øre
+  NZD:
+    name: Đô la New Zealand
+    unit:
+      major:
+        singular: đô la
+        plural: đô la
+      minor:
+        singular: xu
+        plural: xu
+  KRW:
+    name: Won Hàn Quốc
+    unit:
+      major:
+        singular: won
+        plural: won
+      minor:
+        singular: jeon
+        plural: jeon
+  TRY:
+    name: Lira Thổ Nhĩ Kỳ
+    unit:
+      major:
+        singular: lira
+        plural: lira
+      minor:
+        singular: kuruş
+        plural: kuruş
+  PLN:
+    name: Zloty Ba Lan
+    unit:
+      major:
+        singular: zloty
+        plural: zloty
+      minor:
+        singular: grosz
+        plural: grosz
+  CZK:
+    name: Koruna Séc
+    unit:
+      major:
+        singular: koruna
+        plural: koruna
+      minor:
+        singular: haler
+        plural: haler
+  HUF:
+    name: Forint Hungary
+    unit:
+      major:
+        singular: forint
+        plural: forint
+      minor:
+        singular: fillér
+        plural: fillér
+  ILS:
+    name: Shekel Israel
+    unit:
+      major:
+        singular: shekel
+        plural: shekel
+      minor:
+        singular: agora
+        plural: agora
+  AED:
+    name: Dirham UAE
+    unit:
+      major:
+        singular: dirham
+        plural: dirham
+      minor:
+        singular: fils
+        plural: fils
+  SAR:
+    name: Riyal Saudi
+    unit:
+      major:
+        singular: riyal
+        plural: riyal
+      minor:
+        singular: halala
+        plural: halala
+  THB:
+    name: Baht Thái
+    unit:
+      major:
+        singular: baht
+        plural: baht
+      minor:
+        singular: satang
+        plural: satang
+  MYR:
+    name: Ringgit Malaysia
+    unit:
+      major:
+        singular: ringgit
+        plural: ringgit
+      minor:
+        singular: sen
+        plural: sen
+  PHP:
+    name: Peso Philippines
+    unit:
+      major:
+        singular: peso
+        plural: peso
+      minor:
+        singular: centavo
+        plural: centavo

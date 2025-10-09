@@ -142,3 +142,325 @@ tools:
         completed: Terminé
         failed: Échec
         pending: En attente
+
+  currency-converter:
+    title: Convertisseur de devises
+    description: Convertir entre devises en utilisant des taux de change en temps réel. Prend en charge 30+ devises principales avec des données en temps réel.
+    copy-success: 'Copié "{text}" dans le presse-papiers'
+    how-it-works:
+      title: Comment ça marche
+      description: Entrez un montant dans n'importe quelle devise pour voir l'équivalent dans toutes les autres devises. Les taux sont mis à jour à partir de données de taux de change en direct et mis en cache pendant 1 heure.
+
+  xml-to-json:
+    title: XML vers JSON
+    description: Convertir le contenu XML au format JSON
+
+  json-to-xml:
+    title: JSON vers XML
+    description: Convertir le contenu JSON au format XML
+
+  markdown-to-html:
+    title: Markdown vers HTML
+    description: Convertir le contenu Markdown en HTML
+
+  safelink-decoder:
+    title: Décodeur Safelink
+    description: Décoder les URL protégées par des wrappers safelink
+
+  email-normalizer:
+    title: Normalisateur d'email
+    description: Normaliser les emails en supprimant les points, tags et variantes communes
+
+  regex-tester:
+    title: Testeur Regex
+    description: Tester, déboguer et visualiser les expressions régulières
+
+  regex-memo:
+    title: Mémo Regex
+    description: Sauvegarder et organiser vos expressions régulières favorites
+
+  linux-commands-memo:
+    title: Aide-mémoire des commandes Linux
+    description: Référence complète pour les commandes Linux essentielles couvrant les opérations de fichiers, l'administration système, le réseau et plus.
+
+currencies:
+  connector: et
+  USD:
+    name: Dollar américain
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  VND:
+    name: Dong vietnamien
+    unit:
+      major:
+        singular: dong
+        plural: dong
+      minor:
+        singular: xu
+        plural: xu
+  EUR:
+    name: Euro
+    unit:
+      major:
+        singular: euro
+        plural: euros
+      minor:
+        singular: centime
+        plural: centimes
+  GBP:
+    name: Livre sterling
+    unit:
+      major:
+        singular: livre
+        plural: livres
+      minor:
+        singular: penny
+        plural: pence
+  JPY:
+    name: Yen japonais
+    unit:
+      major:
+        singular: yen
+        plural: yen
+      minor:
+        singular: sen
+        plural: sen
+  CNY:
+    name: Yuan chinois
+    unit:
+      major:
+        singular: yuan
+        plural: yuan
+      minor:
+        singular: fen
+        plural: fen
+  CAD:
+    name: Dollar canadien
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  AUD:
+    name: Dollar australien
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  CHF:
+    name: Franc suisse
+    unit:
+      major:
+        singular: franc
+        plural: francs
+      minor:
+        singular: centime
+        plural: centimes
+  INR:
+    name: Roupie indienne
+    unit:
+      major:
+        singular: roupie
+        plural: roupies
+      minor:
+        singular: paisa
+        plural: paise
+  RUB:
+    name: Rouble russe
+    unit:
+      major:
+        singular: rouble
+        plural: roubles
+      minor:
+        singular: kopeck
+        plural: kopecks
+  BRL:
+    name: Real brésilien
+    unit:
+      major:
+        singular: real
+        plural: reais
+      minor:
+        singular: centavo
+        plural: centavos
+  MXN:
+    name: Peso mexicain
+    unit:
+      major:
+        singular: peso
+        plural: pesos
+      minor:
+        singular: centavo
+        plural: centavos
+  ZAR:
+    name: Rand sud-africain
+    unit:
+      major:
+        singular: rand
+        plural: rands
+      minor:
+        singular: cent
+        plural: cents
+  SGD:
+    name: Dollar de Singapour
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  HKD:
+    name: Dollar de Hong Kong
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  NOK:
+    name: Couronne norvégienne
+    unit:
+      major:
+        singular: couronne
+        plural: couronnes
+      minor:
+        singular: øre
+        plural: øre
+  SEK:
+    name: Couronne suédoise
+    unit:
+      major:
+        singular: couronne
+        plural: couronnes
+      minor:
+        singular: öre
+        plural: öre
+  DKK:
+    name: Couronne danoise
+    unit:
+      major:
+        singular: couronne
+        plural: couronnes
+      minor:
+        singular: øre
+        plural: øre
+  NZD:
+    name: Dollar néo-zélandais
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  KRW:
+    name: Won sud-coréen
+    unit:
+      major:
+        singular: won
+        plural: won
+      minor:
+        singular: jeon
+        plural: jeon
+  TRY:
+    name: Lire turque
+    unit:
+      major:
+        singular: lire
+        plural: lires
+      minor:
+        singular: kuruş
+        plural: kuruş
+  PLN:
+    name: Zloty polonais
+    unit:
+      major:
+        singular: zloty
+        plural: zlotys
+      minor:
+        singular: grosz
+        plural: groszy
+  CZK:
+    name: Couronne tchèque
+    unit:
+      major:
+        singular: couronne
+        plural: couronnes
+      minor:
+        singular: haler
+        plural: halers
+  HUF:
+    name: Forint hongrois
+    unit:
+      major:
+        singular: forint
+        plural: forints
+      minor:
+        singular: fillér
+        plural: fillér
+  ILS:
+    name: Shekel israélien
+    unit:
+      major:
+        singular: shekel
+        plural: shekels
+      minor:
+        singular: agora
+        plural: agorot
+  AED:
+    name: Dirham des EAU
+    unit:
+      major:
+        singular: dirham
+        plural: dirhams
+      minor:
+        singular: fils
+        plural: fils
+  SAR:
+    name: Riyal saoudien
+    unit:
+      major:
+        singular: riyal
+        plural: riyals
+      minor:
+        singular: halala
+        plural: halalas
+  THB:
+    name: Baht thaïlandais
+    unit:
+      major:
+        singular: baht
+        plural: baht
+      minor:
+        singular: satang
+        plural: satang
+  MYR:
+    name: Ringgit malaisien
+    unit:
+      major:
+        singular: ringgit
+        plural: ringgits
+      minor:
+        singular: sen
+        plural: sen
+  PHP:
+    name: Peso philippin
+    unit:
+      major:
+        singular: peso
+        plural: pesos
+      minor:
+        singular: centavo
+        plural: centavos

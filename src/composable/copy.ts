@@ -4,7 +4,7 @@ import { useMessage } from 'naive-ui';
 import type { MaybeRefOrGetter } from 'vue';
 
 export function useCopy({ source, text = 'Copied to the clipboard', createToast = true }: { source?: MaybeRefOrGetter<string>; text?: string; createToast?: boolean } = {}) {
-  const { copy, copied, ...rest } = useClipboard({
+  const { copy, copied, isSupported, ...rest } = useClipboard({
     source,
     legacy: true,
   });
@@ -13,6 +13,7 @@ export function useCopy({ source, text = 'Copied to the clipboard', createToast 
 
   return {
     ...rest,
+    isSupported,
     isJustCopied: copied,
     async copy(content?: string, { notificationMessage }: { notificationMessage?: string } = {}) {
       if (source) {

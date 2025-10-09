@@ -34,6 +34,54 @@ docker run -d --name it-tools --restart unless-stopped -p 8080:80 ghcr.io/corent
 - [Tipi](https://www.runtipi.io/docs/apps-available)
 - [Unraid](https://unraid.net/community/apps?q=it-tools)
 
+## Configuration
+
+### Environment Variables
+
+You can configure the application using the following environment variables:
+
+#### Analytics Configuration
+
+**Plausible Analytics:**
+- `VITE_TRACKER_ENABLED` - Enable/disable Plausible tracking (default: false)
+- `VITE_PLAUSIBLE_DOMAIN` - Your Plausible domain
+- `VITE_PLAUSIBLE_API_HOST` - Plausible API host URL
+
+**Google Analytics (GA4):**
+- `VITE_GTAG_ENABLED` - Enable/disable Google Analytics tracking (default: false)
+- `VITE_GTAG_MEASUREMENT_ID` - Your Google Analytics Measurement ID (format: G-XXXXXXXXXX)
+
+**Usercentrics CMP (Cookie Consent):**
+- `VITE_USERCENTRICS_ENABLED` - Enable/disable Usercentrics consent management (default: true)
+- `VITE_USERCENTRICS_SETTINGS_ID` - Your Usercentrics settings ID (default: ed_jz6KAMS3U2X)
+
+#### Application Configuration
+
+- `VITE_SHOW_BANNER` - Show application banner (default: false)
+- `VITE_SHOW_SPONSOR_BANNER` - Show sponsor banner (default: false)
+
+### Example Configuration
+
+Create a `.env` file in the project root:
+
+```bash
+# Analytics
+VITE_TRACKER_ENABLED=true
+VITE_PLAUSIBLE_DOMAIN=your-domain.com
+VITE_PLAUSIBLE_API_HOST=https://plausible.io
+
+VITE_GTAG_ENABLED=true
+VITE_GTAG_MEASUREMENT_ID=G-XXXXXXXXXX
+
+# Cookie Consent Management
+VITE_USERCENTRICS_ENABLED=true
+VITE_USERCENTRICS_SETTINGS_ID=ed_jz6KAMS3U2X
+
+# Application
+VITE_SHOW_BANNER=false
+VITE_SHOW_SPONSOR_BANNER=false
+```
+
 ## Contribute
 
 ### Recommended IDE Setup
@@ -108,6 +156,17 @@ pnpm run script:create:tool my-tool-name
 ```
 
 It will create a directory in `src/tools` with the correct files, and a the import in `src/tools/index.ts`. You will just need to add the imported tool in the proper category and develop the tool.
+
+### Generate sitemap
+
+To generate or update the sitemap.xml file with all available tools and pages:
+
+```sh
+pnpm run script:generate:sitemap
+```
+
+This will automatically extract all tool paths and generate a comprehensive sitemap for SEO purposes.
+
 
 ## Contributors
 

@@ -92,6 +92,105 @@ tools:
     title: Analyseverktøy for passordstyrke
     description: Oppdag styrken av passordet ditt med dette kun-klient-maskin passordstyrke analyse verktøyet og se den estimerte knekketiden.
 
+  currency-converter:
+    title: Valutakonverter
+    description: Konverter mellom valutaer ved å bruke sanntidsvalutakurser. Støtter 30+ hovedvalutaer med sanntidsdata.
+    how-it-works:
+      title: Slik fungerer det
+      description: Skriv inn et beløp i hvilken som helst valuta for å se tilsvarende i alle andre valutaer. Kurser oppdateres fra sanntidsvalutakursdata og caches i 1 time.
+
+  xml-to-json:
+    title: XML til JSON
+    description: Konverter XML-innhold til JSON-format
+
+  json-to-xml:
+    title: JSON til XML
+    description: Konverter JSON-innhold til XML-format
+
+  markdown-to-html:
+    title: Markdown til HTML
+    description: Konverter Markdown-innhold til HTML
+
+  safelink-decoder:
+    title: Safelink-dekoder
+    description: Dekod URLer beskyttet av safelink-wrappere
+
+  email-normalizer:
+    title: E-post-normalisator
+    description: Normaliser e-poster ved å fjerne punkter, tagger og vanlige varianter
+
+  regex-tester:
+    title: Regex-tester
+    description: Test, feilsøk og visualiser regulære uttrykk
+
+  regex-memo:
+    title: Regex-memo
+    description: Lagre og organisere dine favorittregulære uttrykk
+
+currencies:
+  USD:
+    name: Amerikansk dollar
+  VND:
+    name: Vietnamesisk dong
+  EUR:
+    name: Euro
+  GBP:
+    name: Britisk pund
+  JPY:
+    name: Japansk yen
+  CNY:
+    name: Kinesisk yuan
+  CAD:
+    name: Kanadisk dollar
+  AUD:
+    name: Australsk dollar
+  CHF:
+    name: Sveitsisk franc
+  INR:
+    name: Indisk rupee
+  RUB:
+    name: Russisk rubel
+  BRL:
+    name: Brasiliansk real
+  MXN:
+    name: Mexikansk peso
+  ZAR:
+    name: Sørafrikansk rand
+  SGD:
+    name: Singaporsk dollar
+  HKD:
+    name: Hongkong dollar
+  NOK:
+    name: Norsk krone
+  SEK:
+    name: Svensk krone
+  DKK:
+    name: Dansk krone
+  NZD:
+    name: Newzealandsk dollar
+  KRW:
+    name: Sørkoreansk won
+  TRY:
+    name: Tyrkisk lira
+  PLN:
+    name: Polsk zloty
+  CZK:
+    name: Tsjekkisk koruna
+  HUF:
+    name: Ungarsk forint
+  ILS:
+    name: Israelsk shekel
+  AED:
+    name: Emiratisk dirham
+  SAR:
+    name: Saudisk riyal
+  THB:
+    name: Thai baht
+  MYR:
+    name: Malaysisk ringgit
+  PHP:
+    name: Filippinsk peso
+
   chronometer:
     title: Kronometer
     description: Overvåk varigheten av noe. I bunn og grunn et kronometer med enkle funksjoner.
@@ -161,6 +260,10 @@ tools:
   git-memo:
     title: Git jukselapp
     description: Git er en desentralisert versjons håndterings programvare. Med denne jukselappen vil du få kjapp tilgang til de vanligste kommandoene.
+
+  linux-commands-memo:
+    title: Linux kommandoer jukselapp
+    description: Omfattende referanse for viktige Linux-kommandoer som dekker filoperasjoner, systemadministrasjon, nettverk og mer.
 
   slugify-string:
     title: Slugify streng

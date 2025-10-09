@@ -176,6 +176,10 @@ tools:
     title: Git cheatsheet
     description: Git is a decentralized version management software. With this cheatsheet, you will have quick access to the most common git commands.
 
+  linux-commands-memo:
+    title: Linux commands cheatsheet
+    description: Comprehensive reference for essential Linux commands covering file operations, system administration, networking, and more.
+
   slugify-string:
     title: Slugify string
     description: Make a string url, filename and id safe.
@@ -380,6 +384,296 @@ tools:
   temperature-converter:
     title: Temperature converter
     description: Degrees temperature conversions for Kelvin, Celsius, Fahrenheit, Rankine, Delisle, Newton, Réaumur, and Rømer.
+
+  currency-converter:
+    title: Currency converter
+    description: Convert between currencies using live exchange rates. Supports 30+ major currencies with real-time data.
+    copy-success: 'Copied "{text}" to clipboard'
+    how-it-works:
+      title: How it works
+      description: Enter an amount in any currency to see the equivalent in all other currencies. Rates are updated from live exchange rate data and cached for 1 hour.
+
+currencies:
+  connector: and
+  USD:
+    name: US Dollar
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  VND:
+    name: Vietnamese Dong
+    unit:
+      major:
+        singular: dong
+        plural: dong
+      minor:
+        singular: xu
+        plural: xu
+  EUR:
+    name: Euro
+    unit:
+      major:
+        singular: euro
+        plural: euros
+      minor:
+        singular: cent
+        plural: cents
+  GBP:
+    name: British Pound
+    unit:
+      major:
+        singular: pound
+        plural: pounds
+      minor:
+        singular: penny
+        plural: pence
+  JPY:
+    name: Japanese Yen
+    unit:
+      major:
+        singular: yen
+        plural: yen
+      minor:
+        singular: sen
+        plural: sen
+  CNY:
+    name: Chinese Yuan
+    unit:
+      major:
+        singular: yuan
+        plural: yuan
+      minor:
+        singular: fen
+        plural: fen
+  CAD:
+    name: Canadian Dollar
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  AUD:
+    name: Australian Dollar
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  CHF:
+    name: Swiss Franc
+    unit:
+      major:
+        singular: franc
+        plural: francs
+      minor:
+        singular: centime
+        plural: centimes
+  INR:
+    name: Indian Rupee
+    unit:
+      major:
+        singular: rupee
+        plural: rupees
+      minor:
+        singular: paisa
+        plural: paise
+  RUB:
+    name: Russian Ruble
+    unit:
+      major:
+        singular: ruble
+        plural: rubles
+      minor:
+        singular: kopeck
+        plural: kopecks
+  BRL:
+    name: Brazilian Real
+    unit:
+      major:
+        singular: real
+        plural: reais
+      minor:
+        singular: centavo
+        plural: centavos
+  MXN:
+    name: Mexican Peso
+    unit:
+      major:
+        singular: peso
+        plural: pesos
+      minor:
+        singular: centavo
+        plural: centavos
+  ZAR:
+    name: South African Rand
+    unit:
+      major:
+        singular: rand
+        plural: rands
+      minor:
+        singular: cent
+        plural: cents
+  SGD:
+    name: Singapore Dollar
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  HKD:
+    name: Hong Kong Dollar
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  NOK:
+    name: Norwegian Krone
+    unit:
+      major:
+        singular: krone
+        plural: kroner
+      minor:
+        singular: øre
+        plural: øre
+  SEK:
+    name: Swedish Krona
+    unit:
+      major:
+        singular: krona
+        plural: kronor
+      minor:
+        singular: öre
+        plural: öre
+  DKK:
+    name: Danish Krone
+    unit:
+      major:
+        singular: krone
+        plural: kroner
+      minor:
+        singular: øre
+        plural: øre
+  NZD:
+    name: New Zealand Dollar
+    unit:
+      major:
+        singular: dollar
+        plural: dollars
+      minor:
+        singular: cent
+        plural: cents
+  KRW:
+    name: South Korean Won
+    unit:
+      major:
+        singular: won
+        plural: won
+      minor:
+        singular: jeon
+        plural: jeon
+  TRY:
+    name: Turkish Lira
+    unit:
+      major:
+        singular: lira
+        plural: liras
+      minor:
+        singular: kuruş
+        plural: kuruş
+  PLN:
+    name: Polish Zloty
+    unit:
+      major:
+        singular: zloty
+        plural: zlotys
+      minor:
+        singular: grosz
+        plural: groszy
+  CZK:
+    name: Czech Koruna
+    unit:
+      major:
+        singular: koruna
+        plural: korunas
+      minor:
+        singular: haler
+        plural: halers
+  HUF:
+    name: Hungarian Forint
+    unit:
+      major:
+        singular: forint
+        plural: forints
+      minor:
+        singular: fillér
+        plural: fillér
+  ILS:
+    name: Israeli Shekel
+    unit:
+      major:
+        singular: shekel
+        plural: shekels
+      minor:
+        singular: agora
+        plural: agorot
+  AED:
+    name: UAE Dirham
+    unit:
+      major:
+        singular: dirham
+        plural: dirhams
+      minor:
+        singular: fils
+        plural: fils
+  SAR:
+    name: Saudi Riyal
+    unit:
+      major:
+        singular: riyal
+        plural: riyals
+      minor:
+        singular: halala
+        plural: halalas
+  THB:
+    name: Thai Baht
+    unit:
+      major:
+        singular: baht
+        plural: baht
+      minor:
+        singular: satang
+        plural: satang
+  MYR:
+    name: Malaysian Ringgit
+    unit:
+      major:
+        singular: ringgit
+        plural: ringgits
+      minor:
+        singular: sen
+        plural: sen
+  PHP:
+    name: Philippine Peso
+    unit:
+      major:
+        singular: peso
+        plural: pesos
+      minor:
+        singular: centavo
+        plural: centavos
 
   chmod-calculator:
     title: Chmod calculator

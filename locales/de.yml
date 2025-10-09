@@ -193,6 +193,10 @@ tools:
     description: >-
       Git ist eine dezentrale Versionsverwaltungssoftware. Mit diesem
       Spickzettel hast du schnellen Zugriff auf die gängigsten Git-Befehle.
+
+  linux-commands-memo:
+    title: Linux-Befehle Spickzettel
+    description: Umfassende Referenz für wichtige Linux-Befehle, die Dateioperationen, Systemadministration, Netzwerk und mehr abdecken.
   slugify-string:
     title: Slugify String
     description: Mache einen String URL-, Dateinamen- und ID-sicher.
@@ -516,3 +520,102 @@ tools:
         completed: Abgeschlossen
         failed: Fehlgeschlagen
         pending: Wartend
+
+  currency-converter:
+    title: Währungsumrechner
+    description: Konvertieren Sie zwischen Währungen mit Live-Wechselkursen. Unterstützt 30+ Hauptwährungen mit Echtzeitdaten.
+    how-it-works:
+      title: So funktioniert es
+      description: Geben Sie einen Betrag in einer beliebigen Währung ein, um das Äquivalent in allen anderen Währungen zu sehen. Die Kurse werden aus Live-Wechselkursdaten aktualisiert und für 1 Stunde zwischengespeichert.
+
+  xml-to-json:
+    title: XML zu JSON
+    description: XML-Inhalt in JSON-Format konvertieren
+
+  json-to-xml:
+    title: JSON zu XML
+    description: JSON-Inhalt in XML-Format konvertieren
+
+  markdown-to-html:
+    title: Markdown zu HTML
+    description: Markdown-Inhalt in HTML konvertieren
+
+  safelink-decoder:
+    title: Safelink-Decoder
+    description: URLs entschlüsseln, die durch Safelink-Wrapper geschützt sind
+
+  email-normalizer:
+    title: E-Mail-Normalisierer
+    description: E-Mails normalisieren durch Entfernen von Punkten, Tags und häufigen Varianten
+
+  regex-tester:
+    title: Regex-Tester
+    description: Reguläre Ausdrücke testen, debuggen und visualisieren
+
+  regex-memo:
+    title: Regex-Memo
+    description: Ihre bevorzugten regulären Ausdrücke speichern und organisieren
+
+currencies:
+  USD:
+    name: US-Dollar
+  VND:
+    name: Vietnamesischer Dong
+  EUR:
+    name: Euro
+  GBP:
+    name: Britisches Pfund
+  JPY:
+    name: Japanischer Yen
+  CNY:
+    name: Chinesischer Yuan
+  CAD:
+    name: Kanadischer Dollar
+  AUD:
+    name: Australischer Dollar
+  CHF:
+    name: Schweizer Franken
+  INR:
+    name: Indische Rupie
+  RUB:
+    name: Russischer Rubel
+  BRL:
+    name: Brasilianischer Real
+  MXN:
+    name: Mexikanischer Peso
+  ZAR:
+    name: Südafrikanischer Rand
+  SGD:
+    name: Singapur-Dollar
+  HKD:
+    name: Hongkong-Dollar
+  NOK:
+    name: Norwegische Krone
+  SEK:
+    name: Schwedische Krone
+  DKK:
+    name: Dänische Krone
+  NZD:
+    name: Neuseeland-Dollar
+  KRW:
+    name: Südkoreanischer Won
+  TRY:
+    name: Türkische Lira
+  PLN:
+    name: Polnischer Zloty
+  CZK:
+    name: Tschechische Krone
+  HUF:
+    name: Ungarischer Forint
+  ILS:
+    name: Israelischer Schekel
+  AED:
+    name: VAE-Dirham
+  SAR:
+    name: Saudi-Riyal
+  THB:
+    name: Thailändischer Baht
+  MYR:
+    name: Malaysischer Ringgit
+  PHP:
+    name: Philippinischer Peso

@@ -13,13 +13,11 @@ export const useToolStore = defineStore('tools', () => {
   const tools = computed<ToolWithCategory[]>(() => toolsWithCategory
     .filter(tool => tool && tool.name && tool.name.trim()) // Filter out invalid tools at source
     .map((tool) => {
-      const toolI18nKey = tool.path.replace(/\//g, '');
-
       return ({
         ...tool,
         path: tool.path,
-        name: t(`tools.${toolI18nKey}.title`, tool.name) || tool.name || 'Unknown Tool',
-        description: t(`tools.${toolI18nKey}.description`, tool.description) || tool.description || '',
+        name: tool.name || 'Unknown Tool',
+        description: tool.description || '',
         category: t(`tools.categories.${tool.category.toLowerCase()}`, tool.category) || tool.category || 'Other',
       });
     })

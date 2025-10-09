@@ -91,3 +91,106 @@ tools:
   html-to-markdown:
     title: HTML para Markdown
     description: Converter conteúdo HTML para formato Markdown com opções personalizáveis e validação
+
+  currency-converter:
+    title: Conversor de moedas
+    description: Converter entre moedas usando taxas de câmbio em tempo real. Suporta 30+ moedas principais com dados em tempo real.
+    how-it-works:
+      title: Como funciona
+      description: Digite um valor em qualquer moeda para ver o equivalente em todas as outras moedas. As taxas são atualizadas a partir de dados de taxa de câmbio ao vivo e armazenadas em cache por 1 hora.
+
+  xml-to-json:
+    title: XML para JSON
+    description: Converter conteúdo XML para formato JSON
+
+  json-to-xml:
+    title: JSON para XML
+    description: Converter conteúdo JSON para formato XML
+
+  markdown-to-html:
+    title: Markdown para HTML
+    description: Converter conteúdo Markdown para HTML
+
+  safelink-decoder:
+    title: Decodificador Safelink
+    description: Decodificar URLs protegidas por wrappers safelink
+
+  email-normalizer:
+    title: Normalizador de email
+    description: Normalizar emails removendo pontos, tags e variantes comuns
+
+  regex-tester:
+    title: Testador de Regex
+    description: Testar, depurar e visualizar expressões regulares
+
+  regex-memo:
+    title: Memo de Regex
+    description: Salvar e organizar suas expressões regulares favoritas
+
+  linux-commands-memo:
+    title: Folha de referência de comandos Linux
+    description: Referência abrangente para comandos essenciais do Linux cobrindo operações de arquivos, administração do sistema, rede e mais.
+
+currencies:
+  USD:
+    name: Dólar americano
+  VND:
+    name: Dong vietnamita
+  EUR:
+    name: Euro
+  GBP:
+    name: Libra esterlina
+  JPY:
+    name: Iene japonês
+  CNY:
+    name: Yuan chinês
+  CAD:
+    name: Dólar canadense
+  AUD:
+    name: Dólar australiano
+  CHF:
+    name: Franco suíço
+  INR:
+    name: Rupia indiana
+  RUB:
+    name: Rublo russo
+  BRL:
+    name: Real brasileiro
+  MXN:
+    name: Peso mexicano
+  ZAR:
+    name: Rand sul-africano
+  SGD:
+    name: Dólar de Singapura
+  HKD:
+    name: Dólar de Hong Kong
+  NOK:
+    name: Coroa norueguesa
+  SEK:
+    name: Coroa sueca
+  DKK:
+    name: Coroa dinamarquesa
+  NZD:
+    name: Dólar neozelandês
+  KRW:
+    name: Won sul-coreano
+  TRY:
+    name: Lira turca
+  PLN:
+    name: Zloty polonês
+  CZK:
+    name: Coroa tcheca
+  HUF:
+    name: Forint húngaro
+  ILS:
+    name: Shekel israelense
+  AED:
+    name: Dirham dos EAU
+  SAR:
+    name: Riyal saudita
+  THB:
+    name: Baht tailandês
+  MYR:
+    name: Ringgit malaio
+  PHP:
+    name: Peso filipino

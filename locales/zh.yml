@@ -92,6 +92,105 @@ tools:
     title: 密码强度分析仪
     description: 使用此密码强度分析器和破解时间估计工具来发现密码的强度。
 
+  currency-converter:
+    title: 货币转换器
+    description: 使用实时汇率在货币之间转换。支持30多种主要货币的实时数据。
+    how-it-works:
+      title: 工作原理
+      description: 输入任何货币的金额以查看所有其他货币的等值。汇率从实时汇率数据更新并缓存1小时。
+
+  xml-to-json:
+    title: XML转JSON
+    description: 将XML内容转换为JSON格式
+
+  json-to-xml:
+    title: JSON转XML
+    description: 将JSON内容转换为XML格式
+
+  markdown-to-html:
+    title: Markdown转HTML
+    description: 将Markdown内容转换为HTML
+
+  safelink-decoder:
+    title: Safelink解码器
+    description: 解码受safelink包装器保护的URL
+
+  email-normalizer:
+    title: 邮箱标准化器
+    description: 通过删除点、标签和常见变体来标准化邮箱
+
+  regex-tester:
+    title: 正则表达式测试器
+    description: 测试、调试和可视化正则表达式
+
+  regex-memo:
+    title: 正则表达式备忘录
+    description: 保存和组织您喜欢的正则表达式
+
+currencies:
+  USD:
+    name: 美元
+  VND:
+    name: 越南盾
+  EUR:
+    name: 欧元
+  GBP:
+    name: 英镑
+  JPY:
+    name: 日元
+  CNY:
+    name: 人民币
+  CAD:
+    name: 加拿大元
+  AUD:
+    name: 澳元
+  CHF:
+    name: 瑞士法郎
+  INR:
+    name: 印度卢比
+  RUB:
+    name: 俄罗斯卢布
+  BRL:
+    name: 巴西雷亚尔
+  MXN:
+    name: 墨西哥比索
+  ZAR:
+    name: 南非兰特
+  SGD:
+    name: 新加坡元
+  HKD:
+    name: 港币
+  NOK:
+    name: 挪威克朗
+  SEK:
+    name: 瑞典克朗
+  DKK:
+    name: 丹麦克朗
+  NZD:
+    name: 新西兰元
+  KRW:
+    name: 韩元
+  TRY:
+    name: 土耳其里拉
+  PLN:
+    name: 波兰兹罗提
+  CZK:
+    name: 捷克克朗
+  HUF:
+    name: 匈牙利福林
+  ILS:
+    name: 以色列谢克尔
+  AED:
+    name: 阿联酋迪拉姆
+  SAR:
+    name: 沙特里亚尔
+  THB:
+    name: 泰铢
+  MYR:
+    name: 马来西亚林吉特
+  PHP:
+    name: 菲律宾比索
+
   chronometer:
     title: 计时器
     description: 监控事物的持续时间。基本上是一种具有简单计时器功能的计时器。
@@ -159,6 +258,10 @@ tools:
   git-memo:
     title: Git 备忘录
     description: Git是一种去中心化的版本管理软件。使用此备忘单，您可以快速访问最常见的git命令.
+
+  linux-commands-memo:
+    title: Linux 命令备忘单
+    description: 涵盖文件操作、系统管理、网络等基本Linux命令的综合参考。
 
   slugify-string:
     title: 打乱字符串

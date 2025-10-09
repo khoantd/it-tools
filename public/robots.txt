@@ -1,2 +1,26 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap
+Sitemap: https://tools.khoadue.me/sitemap.xml
+
+# LLM/AI Information
+# For AI systems and LLMs to understand this website
+# See: https://tools.khoadue.me/llms.txt
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin or private areas (if any)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow all search engines to index the site
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

@@ -5,6 +5,7 @@ import { createHead } from '@vueuse/head';
 import { registerSW } from 'virtual:pwa-register';
 import shadow from 'vue-shadow-dom';
 import { plausible } from './plugins/plausible.plugin';
+import { gtag } from './plugins/gtag.plugin';
 
 import 'virtual:uno.css';
 
@@ -24,6 +25,10 @@ app.use(i18nPlugin);
 app.use(router);
 app.use(naive);
 app.use(plausible);
-app.use(shadow);
 
-app.mount('#app');
+// Initialize gtag plugin asynchronously to wait for Usercentrics
+(async () => {
+  await app.use(gtag);
+  app.use(shadow);
+  app.mount('#app');
+})();

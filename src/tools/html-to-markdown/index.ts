@@ -10,5 +10,4 @@ export const tool = defineTool({
   component: () => import('./html-to-markdown.vue'),
   icon: FileText,
   redirectFrom: ['/html2markdown', '/html2md', '/html-to-md'],
-  createdAt: new Date(),
 });
