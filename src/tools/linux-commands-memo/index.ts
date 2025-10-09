@@ -25,4 +25,5 @@ export const tool = defineTool({
   ],
   component: () => import('./linux-commands-memo.vue'),
   icon: Terminal,
+  createdAt: new Date(),
 });

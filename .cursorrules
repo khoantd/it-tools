@@ -1,0 +1,62 @@
+# IT-Tools Project Rules
+
+## MANDATORY: Read Context Engineering Prompt First
+
+**Before making ANY changes to this codebase, you MUST read and understand the CONTEXT_ENGINEERING_PROMPT.md file.**
+
+This is non-negotiable and applies to:
+- Adding new tools
+- Modifying existing features
+- Updating documentation
+- Making any code changes
+
+## Key Requirements from Context Engineering Prompt
+
+### 1. Tool Addition Checklist
+When adding a new tool, you MUST:
+- [ ] Create tool definition in `src/tools/index.ts`
+- [ ] Implement Vue component following established patterns
+- [ ] Add to appropriate category
+- [ ] Add translations in ALL language files (`locales/*.yml`)
+- [ ] Update `public/sitemap.xml` with new tool entry
+- [ ] Update `dist/sitemap.xml` with new tool entry
+- [ ] Update `public/llms.txt` with tool information
+- [ ] Increment tool counts in `llms.txt`
+- [ ] Update category counts in `llms.txt`
+
+### 2. Architecture Patterns
+- Use Vue 3 Composition API
+- Follow TypeScript strict mode
+- Use UnoCSS for styling
+- Implement i18n for all user-facing text
+- Follow existing component structure in `src/tools/`
+
+### 3. SEO and Documentation Updates
+Every new tool requires:
+- Sitemap entry with proper priority (0.7 for tools)
+- LLMs.txt documentation update
+- Proper meta tags and descriptions
+- Alphabetical ordering in sitemap
+
+### 4. Code Style
+- ESLint rules are enforced
+- Use Prettier for formatting
+- Match indentation of surrounding code
+- Follow existing naming conventions
+
+### 5. Common Patterns
+- Use `c-card` for tool containers
+- Use `c-input-text` for text inputs
+- Use `c-button` for actions
+- Implement copy-to-clipboard functionality
+- Add proper error handling
+
+## File Structure Understanding
+- `src/tools/index.ts` - Tool registry (ALWAYS update when adding tools)
+- `src/tools/[category]/[tool-name]/` - Tool implementation
+- `locales/*.yml` - Translations (ALL must be updated)
+- `public/sitemap.xml` - SEO sitemap (MUST update)
+- `public/llms.txt` - AI documentation (MUST update)
+
+## Verification Before Committing
+Run these checks:

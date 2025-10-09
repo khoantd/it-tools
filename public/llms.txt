@@ -32,7 +32,7 @@ IT Tools is a free and open-source collection of handy online tools for develope
 
 ## Complete Tool List
 
-Total Tools: 89
+Total Tools: 90
 
 ### Crypto (11 tools)
 - **Token Generator** (/token-generator) - Generate secure random tokens
@@ -95,8 +95,9 @@ Total Tools: 89
 - **SVG Placeholder Generator** (/svg-placeholder-generator) - Generate SVG placeholder images
 - **Camera Recorder** (/camera-recorder) - Record videos using device camera
 
-### Development (16 tools)
+### Development (17 tools)
 - **Git Memo** (/git-memo) - Quick reference for Git commands
+- **Linux Commands Memo** (/linux-commands-memo) - Comprehensive reference for essential Linux commands
 - **Random Port Generator** (/random-port-generator) - Generate random port numbers
 - **Crontab Generator** (/crontab-generator) - Generate cron expressions
 - **JSON Viewer** (/json-viewer) - Pretty-print and view JSON data

@@ -9,7 +9,6 @@ export const tool = defineTool({
   keywords: ['ai', 'chat', 'llm', 'mcp', 'openai', 'anthropic', 'playground'],
   component: () => import('./ai-playground.vue'),
   icon: Message2,
-  createdAt: new Date(),
 });
 
 

@@ -301,6 +301,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.khoadue.me/linux-commands-memo</loc>
+    <lastmod>2025-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.khoadue.me/json-minify</loc>
     <lastmod>2025-10-08</lastmod>
     <changefreq>weekly</changefreq>
