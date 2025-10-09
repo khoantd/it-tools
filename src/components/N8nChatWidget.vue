@@ -282,47 +282,104 @@ const initializeChatWidget = () => {
     }
   };
 
-  // Simple markdown parser for bot messages
+  // Enhanced markdown parser for bot messages
   const parseMarkdown = (text: string): string => {
     let html = text;
     
-    // Escape HTML to prevent XSS
-    html = html.replace(/&/g, '&amp;')
-               .replace(/</g, '&lt;')
-               .replace(/>/g, '&gt;');
+    // Escape HTML first to prevent XSS, but we'll selectively unescape for markdown
+    const escapeHtml = (str: string) => {
+      return str.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+    };
     
-    // Bold: **text** or __text__
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    // Process in order: headings, bold, italic, code, links, lists, line breaks
     
-    // Italic: *text* or _text_
-    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+    // Headings: ### H3, ## H2, # H1 (must be at start of line)
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    
+    // Bold: **text** or __text__ (process before italic)
+    html = html.replace(/\*\*([^\*\n]+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__([^_\n]+?)__/g, '<strong>$1</strong>');
+    
+    // Italic: *text* or _text_ (after bold to avoid conflicts)
+    html = html.replace(/\*([^\*\n]+?)\*/g, '<em>$1</em>');
+    html = html.replace(/_([^_\n]+?)_/g, '<em>$1</em>');
     
     // Inline code: `code`
-    html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+    html = html.replace(/`([^`]+?)`/g, (match, code) => {
+      return `<code>${escapeHtml(code)}</code>`;
+    });
     
-    // Links: [text](url)
-    html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    // Links: [text](url) - markdown format
+    html = html.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, (match, text, url) => {
+      const safeUrl = escapeHtml(url);
+      const safeText = text; // Text can contain markdown
+      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
+    });
     
-    // Line breaks: convert \n to <br> but preserve paragraph structure
-    html = html.replace(/\n\n/g, '</p><p>');
-    html = html.replace(/\n/g, '<br>');
+    // Auto-detect plain URLs and make them clickable
+    const urlRegex = /(https?:\/\/[^\s<>"{}|\\^`\[\]]+)/g;
+    html = html.replace(urlRegex, (match, url) => {
+      // Don't convert URLs that are already inside <a> tags
+      if (html.indexOf(`href="${url}"`) !== -1) {
+        return match;
+      }
+      const safeUrl = escapeHtml(url);
+      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
     
-    // Wrap in paragraph if not already wrapped
-    if (!html.startsWith('<p>')) {
-      html = '<p>' + html + '</p>';
+    // Unordered lists: lines starting with * or - (process before line breaks)
+    const lines = html.split('\n');
+    let inList = false;
+    let listItems: string[] = [];
+    const processedLines: string[] = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const listMatch = line.match(/^[*-]\s+(.+)$/);
+      
+      if (listMatch) {
+        if (!inList) {
+          inList = true;
+          listItems = [];
+        }
+        listItems.push(`<li>${listMatch[1]}</li>`);
+        
+        // Check if next line is also a list item
+        const nextLine = lines[i + 1];
+        if (!nextLine || !nextLine.match(/^[*-]\s+/)) {
+          // End of list
+          processedLines.push(`<ul>${listItems.join('')}</ul>`);
+          inList = false;
+          listItems = [];
+        }
+      } else {
+        processedLines.push(line);
+      }
     }
     
-    // Unordered lists: lines starting with * or -
-    html = html.replace(/<p>([*-]\s.+?)<\/p>/g, (match, content) => {
-      const items = content.split(/<br>([*-]\s)/g)
-        .filter((item: string) => item && !item.match(/^[*-]\s$/))
-        .map((item: string) => item.replace(/^[*-]\s/, ''))
-        .map((item: string) => `<li>${item}</li>`)
-        .join('');
-      return `<ul>${items}</ul>`;
-    });
+    html = processedLines.join('\n');
+    
+    // Paragraphs: double line breaks create new paragraphs
+    const paragraphs = html.split(/\n\n+/);
+    html = paragraphs
+      .map(para => {
+        para = para.trim();
+        // Don't wrap headings, lists, or already wrapped content in <p>
+        if (para.startsWith('<h') || para.startsWith('<ul') || para.startsWith('<ol') || para.startsWith('<p>')) {
+          return para;
+        }
+        // Replace single line breaks with <br>
+        para = para.replace(/\n/g, '<br>');
+        return para ? `<p>${para}</p>` : '';
+      })
+      .filter(p => p)
+      .join('');
     
     return html;
   };
@@ -585,6 +642,33 @@ defineExpose({
 }
 
 /* Markdown styling for bot messages */
+:deep(.chat-message.bot h1) {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 12px 0 8px 0;
+  color: v-bind('appTheme.text.baseColor');
+}
+
+:deep(.chat-message.bot h2) {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 10px 0 6px 0;
+  color: v-bind('appTheme.text.baseColor');
+}
+
+:deep(.chat-message.bot h3) {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 8px 0 4px 0;
+  color: v-bind('appTheme.text.baseColor');
+}
+
+:deep(.chat-message.bot h1:first-child),
+:deep(.chat-message.bot h2:first-child),
+:deep(.chat-message.bot h3:first-child) {
+  margin-top: 0;
+}
+
 :deep(.chat-message.bot strong) {
   font-weight: 600;
   color: v-bind('appTheme.text.baseColor');
@@ -627,6 +711,17 @@ defineExpose({
 :deep(.chat-message.bot a) {
   color: v-bind('appTheme.primary.color');
   text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+:deep(.chat-message.bot a:hover) {
+  color: v-bind('appTheme.primary.colorHover');
+  text-decoration: underline;
+}
+
+:deep(.chat-message.bot a:visited) {
+  color: v-bind('appTheme.primary.colorPressed');
 }
 
 /* Typing indicator */
