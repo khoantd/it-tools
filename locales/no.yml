@@ -469,6 +469,10 @@ currencies:
     title: YAML til JSON konverter
     description: Konverterl YAML til JSON.
 
+  n8n-workflow-visualizer:
+    title: n8n Workflow Visualisator
+    description: 'Visualiser n8n workflows fra JSON. Lim inn din n8n workflow JSON for å se den gjengitt som et interaktivt workflow-diagram.'
+
   uuid-generator:
     title: UUIDs generator
     description: En universell Unik Identifikator (UUID) er et 128-bit nummer, brukt til å identifisere informasjon i datasystemer.

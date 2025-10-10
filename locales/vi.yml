@@ -374,6 +374,10 @@ tools:
     title: Trình chuyển đổi YAML sang JSON
     description: Chuyển đổi YAML sang JSON một cách đơn giản với công cụ chuyển đổi trực tuyến này.
 
+  n8n-workflow-visualizer:
+    title: Trình hiển thị Workflow n8n
+    description: 'Hiển thị các workflow n8n từ JSON. Dán JSON workflow n8n của bạn để xem nó được hiển thị dưới dạng sơ đồ workflow tương tác.'
+
   uuid-generator:
     title: Trình tạo UUID
     description: Một UUID (Universally Unique Identifier) là một số 128 bit được sử dụng để xác định thông tin trong hệ thống máy tính. Số lượng UUID có thể có là 16^32, tương đương với 2^128 hoặc khoảng 3.4x10^38 (rất lớn!).

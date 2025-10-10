@@ -464,3 +464,7 @@ currencies:
       minor:
         singular: centavo
         plural: centavos
+
+  n8n-workflow-visualizer:
+    title: Visualiseur de Workflow n8n
+    description: 'Visualisez les workflows n8n à partir de JSON. Collez votre JSON de workflow n8n pour le voir rendu comme un diagramme de workflow interactif.'

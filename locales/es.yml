@@ -236,3 +236,7 @@ currencies:
     name: Ringgit malayo
   PHP:
     name: Peso filipino
+
+  n8n-workflow-visualizer:
+    title: Visualizador de Workflow n8n
+    description: 'Visualiza workflows de n8n desde JSON. Pega tu JSON de workflow de n8n para verlo renderizado como un diagrama de workflow interactivo.'

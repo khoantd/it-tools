@@ -49,6 +49,11 @@ export default defineConfig({
     Icons({ compiler: 'vue3' }),
     vue({
       include: [/\.vue$/, /\.md$/],
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === 'n8n-demo'
+        }
+      }
     }),
     vueJsx(),
     markdown(),
@@ -94,7 +99,13 @@ export default defineConfig({
       dirs: ['src/'],
       extensions: ['vue', 'md'],
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      resolvers: [NaiveUiResolver(), IconsResolver({ prefix: 'icon' })],
+      resolvers: [
+        NaiveUiResolver(), 
+        IconsResolver({ 
+          prefix: 'icon',
+          enabledCollections: ['mdi', 'tabler', 'ci', 'la']
+        })
+      ],
     }),
     Unocss(),
   ],

@@ -32,7 +32,7 @@ IT Tools is a free and open-source collection of handy online tools for develope
 
 ## Complete Tool List
 
-Total Tools: 90
+Total Tools: 91
 
 ### Crypto (11 tools)
 - **Token Generator** (/token-generator) - Generate secure random tokens
@@ -47,7 +47,7 @@ Total Tools: 90
 - **Password Strength Analyzer** (/password-strength-analyser) - Analyze password strength
 - **PDF Signature Checker** (/pdf-signature-checker) - Check PDF digital signatures
 
-### Converter (22 tools)
+### Converter (23 tools)
 - **Date Time Converter** (/date-time-converter) - Convert between different date/time formats
 - **Integer Base Converter** (/integer-base-converter) - Convert numbers between different bases
 - **Roman Numeral Converter** (/roman-numeral-converter) - Convert between Roman and Arabic numerals
@@ -70,6 +70,7 @@ Total Tools: 90
 - **JSON to XML** (/json-to-xml) - Convert JSON to XML format
 - **Markdown to HTML** (/markdown-to-html) - Convert Markdown to HTML
 - **HTML to Markdown** (/html-to-markdown) - Convert HTML to Markdown
+- **n8n Workflow Visualizer** (/n8n-workflow-visualizer) - Visualize n8n workflows from JSON
 
 ### Web (16 tools)
 - **URL Encoder** (/url-encoder) - Encode/decode URL components

@@ -424,6 +424,10 @@ tools:
   yaml-to-json-converter:
     title: YAML zu JSON
     description: Konvertiere YAML einfach in JSON mit diesem Live-Online-Konverter.
+
+  n8n-workflow-visualizer:
+    title: n8n Workflow Visualisierer
+    description: 'Visualisieren Sie n8n Workflows aus JSON. Fügen Sie Ihr n8n Workflow JSON ein, um es als interaktives Workflow-Diagramm zu sehen.'
   uuid-generator:
     title: UUID-Generator
     description: >-

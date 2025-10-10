@@ -319,7 +319,7 @@ const initializeChatWidget = () => {
     html = html.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, (match, text, url) => {
       const safeUrl = escapeHtml(url);
       const safeText = text; // Text can contain markdown
-      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
+      return `<a href="${safeUrl}" target="_self" rel="noopener noreferrer">${safeText}</a>`;
     });
     
     // Auto-detect plain URLs and make them clickable
@@ -330,7 +330,7 @@ const initializeChatWidget = () => {
         return match;
       }
       const safeUrl = escapeHtml(url);
-      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+      return `<a href="${safeUrl}" target="_self" rel="noopener noreferrer">${url}</a>`;
     });
     
     // Unordered lists: lines starting with * or - (process before line breaks)

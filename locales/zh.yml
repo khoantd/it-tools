@@ -465,6 +465,10 @@ currencies:
     title: YAML到JSON转换器
     description: 使用此在线转换器将YAML转换为JSON。
 
+  n8n-workflow-visualizer:
+    title: n8n工作流可视化器
+    description: '从JSON可视化n8n工作流。粘贴您的n8n工作流JSON以查看其渲染为交互式工作流图表。'
+
   uuid-generator:
     title: UUIDs 生成器
     description: 通用唯一标识符（UUID）是一个128位数字，用于标识计算机系统中的信息。可能的UUID数量为16^32，即2^128或约3.4x10^38（这是一个很大的数字！）。

@@ -40,6 +40,7 @@
   "dependencies": {
     "@it-tools/bip39": "^0.0.4",
     "@it-tools/oggen": "^1.3.0",
+    "@n8n_io/n8n-demo-component": "^1.0.20",
     "@regexper/render": "^1.0.0",
     "@sindresorhus/slugify": "^2.2.1",
     "@tabler/icons-vue": "^3.20.0",

@@ -85,6 +85,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tools.khoadue.me/n8n-workflow-visualizer</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tools.khoadue.me/html-to-markdown</loc>
     <lastmod>2025-10-08</lastmod>
     <changefreq>weekly</changefreq>
